@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+          "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+          "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="warning"/>
+    <property name="fileExtensions" value="java, properties, xml"/>
+    <module name="TreeWalker">
+        <!-- Rule: curly braces on their own line-->
+        <module name="LeftCurly">
+            <property name="option" value="nl"/>
+        </module>
+        <module name="RightCurly">
+            <property name="option" value="alone"/>
+        </module>
+        <!-- Rule: indentations should be tabs, every tab as a width of 4 spaces -->
+        <!-- https://stackoverflow.com/questions/28458846/how-to-require-tab-indentation-with-checkstyle -->
+        <module name="IndentationCheck">
+            <property name="tabWidth" value="4"/>
+            <property name="basicOffset" value="4"/>
+            <property name="forceStrictCondition" value="true"/>
+        </module>
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="^ +"/>
+            <property name="message" value="Indent must use tab characters"/>
+            <property name="ignoreComments" value="true"/>
+        </module>
+    </module>
+</module>
