@@ -1,4 +1,4 @@
-package com.gabrielrochon.languagelearningai;
+package com.gabrielrochon.loqio;
 
 import java.util.Arrays;
 
@@ -9,12 +9,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class LanguagelearningaiApplication
+public class LoqioApplication
 {
 
 	public static void main(String[] args)
 	{
-		SpringApplication.run(LanguagelearningaiApplication.class, args);
+		SpringApplication.run(LoqioApplication.class, args);
 	}
 
 }

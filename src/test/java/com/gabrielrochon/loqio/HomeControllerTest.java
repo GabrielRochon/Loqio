@@ -1,4 +1,4 @@
-package com.gabrielrochon.languagelearningai;
+package com.gabrielrochon.loqio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

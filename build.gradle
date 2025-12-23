@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.gabrielrochon'
 version = '0.0.1-SNAPSHOT'
-description = 'Basic Spring Boot Project'
+description = 'Loqio - AI-powered language learning platform'
 
 java {
 	toolchain {
