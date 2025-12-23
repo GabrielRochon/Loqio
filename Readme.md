@@ -6,6 +6,22 @@
 
 This full-stack web application serves as an educational project exploring modern software technologies, from backend microservices and databases to cloud deployment and DevOps practices.
 
+## Running the Microservices
+
+To run all microservices simultaneously during development:
+
+```bash
+.\gradlew --parallel :hello-world-service:bootRun :language-content-service:bootRun
+```
+
+This will start:
+- **Hello World Service** on http://localhost:8081/
+- **Language Content Service** on http://localhost:8082/
+
+To run individual services:
+- Hello World: `.\gradlew :hello-world-service:bootRun`
+- Language Content: `.\gradlew :language-content-service:bootRun`
+
 ## Learning Checklist
 
 |   | Category | Technology Used | Microservice Requiring Creation | Feature |
