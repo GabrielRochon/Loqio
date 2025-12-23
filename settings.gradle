@@ -1,1 +1,3 @@
 rootProject.name = 'loqio'
+include 'hello-world-service'
+include 'language-content-service'
