@@ -22,26 +22,22 @@ public class SentenceService
 	 * Retrieves all sentences for a specific module from the database.
 	 *
 	 * @param moduleId The ID of the module
-	 * @return List of SentenceResponse DTOs for the given module
+	 * @return List of Sentence entities for the given module
 	 */
-	public List<SentenceResponse> getSentencesByModuleId(Long moduleId)
+	public List<Sentence> getSentencesByModuleId(Long moduleId)
 	{
-		return sentenceRepository.findByModuleId(moduleId).stream()
-				.map(this::mapToResponse)
-				.collect(Collectors.toList());
+		return sentenceRepository.findByModuleId(moduleId);
 	}
 
 	/**
 	 * Retrieves all sentences for a specific language from the database.
 	 *
 	 * @param languageId The ID of the language
-	 * @return List of SentenceResponse DTOs for the given language
+	 * @return List of Sentence entities for the given language
 	 */
-	public List<SentenceResponse> getSentencesByLanguageId(Long languageId)
+	public List<Sentence> getSentencesByLanguageId(Long languageId)
 	{
-		return sentenceRepository.findByModuleLanguageId(languageId).stream()
-				.map(this::mapToResponse)
-				.collect(Collectors.toList());
+		return sentenceRepository.findByModuleLanguageId(languageId);
 	}
 	
 }
