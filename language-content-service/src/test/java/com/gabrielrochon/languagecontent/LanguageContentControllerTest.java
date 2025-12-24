@@ -2,10 +2,14 @@ package com.gabrielrochon.languagecontent;
 
 import com.gabrielrochon.languagecontent.language.Language;
 import com.gabrielrochon.languagecontent.language.LanguageService;
+import com.gabrielrochon.languagecontent.module.Module;
+import com.gabrielrochon.languagecontent.module.ModuleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,17 +24,38 @@ public class LanguageContentControllerTest {
     @Autowired
     private LanguageService languageService;
 
+    @Autowired
+    private ModuleService moduleService;
+
     @Test
     public void testAddLanguage() {
         // Arrange
-        Language newLanguage = new Language("Test Language");
+        Language newLanguage = new Language("Tagalog");
 
         // Act
         Language savedLanguage = languageService.addLanguage(newLanguage);
 
         // Assert
         assertThat(savedLanguage).isNotNull();
-        assertThat(savedLanguage.getName()).isEqualTo("Test Language");
+        assertThat(savedLanguage.getName()).isEqualTo("Tagalog");
         assertThat(savedLanguage.getId()).isNotNull();
+    }
+
+    @Test
+    public void testGetAllLanguages() {
+        // Arrange
+        Language newLanguage1 = new Language("Klingon");
+        Language newLanguage2 = new Language("French");
+        languageService.addLanguage(newLanguage1);
+        languageService.addLanguage(newLanguage2);
+
+        // Act
+        List<Language> languages = languageService.getAllLanguages();
+
+        // Assert
+        assertThat(languages).isNotEmpty();
+        assertThat(languages.stream().anyMatch(l -> "Klingon".equals(l.getName()))).isTrue();
+        assertThat(languages.stream().anyMatch(l -> "French".equals(l.getName()))).isTrue();
+        assertThat(languages.stream().anyMatch(l -> "Tagalog".equals(l.getName()))).isFalse();
     }
 }
