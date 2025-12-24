@@ -43,6 +43,10 @@ function Modules() {
     navigate('/');
   };
 
+  const handleModuleClick = (moduleId) => {
+    navigate(`/module/${moduleId}/sentences`);
+  };
+
   if (loading) return <div className="App"><header className="App-header"><p>Loading...</p></header></div>;
   if (error) return <div className="App">Error: {error}</div>;
 
@@ -58,9 +62,14 @@ function Modules() {
         ) : (
           <div className="modules-list">
             {modules.map(module => (
-              <div key={module.id} className="module-card">
+              <div
+                key={module.id}
+                className="module-card clickable"
+                onClick={() => handleModuleClick(module.id)}
+              >
                 <h3>{module.name}</h3>
                 <p>ID: {module.id}</p>
+                <p className="click-hint">Click to view sentences</p>
               </div>
             ))}
           </div>
