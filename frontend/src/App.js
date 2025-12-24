@@ -32,7 +32,7 @@ function App() {
         </AppBar>
         <Routes>
           <Route path="/" element={<Languages />} />
-          <Route path="/language/:languageId/modules" element={<Modules />} />
+          <Route path="/languages/:languageId" element={<Modules />} />
           <Route path="/module/:moduleId/sentences" element={<Sentences />} />
         </Routes>
       </div>

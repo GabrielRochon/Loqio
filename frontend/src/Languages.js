@@ -29,7 +29,7 @@ function Languages() {
   };
 
   const handleLanguageClick = (languageId) => {
-    navigate(`/language/${languageId}/modules`);
+    navigate(`/languages/${languageId}`);
   };
 
   if (error) return <div className="App-main">Error: {error}</div>;

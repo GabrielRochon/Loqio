@@ -44,7 +44,7 @@ This will start the React development server on http://localhost:3000/
 | ✅ | Backend (Microservice-Friendly) | Java / SpringBoot | - | Basic project skeleton |
 | ✅ | Unit Tests | JUnit | - | Basic endpoint tests |
 | ✅ | Relational DB | PostgreSQL | Language Content | Fetch a list of languages and their curriculum |
-| 🏗️ | UI | React | - | Navigate to a language course and display the modules / sentences per module |
+| 🏗️ | UI | React, Azure Blob Storage | - | Navigate to a language course and display the modules / sentences per module, display background images |
 | ⬜ | Non-Relational DB | MongoDB | User Progress | Track the words learned and experience points of a user |
 | ⬜ | Rest API Documentation | Swagger | - | Document all microservices' API endpoints 
 | ⬜ | Caching | Redis | - | Reduce operation time to fetch the same language's curriculum many times |
