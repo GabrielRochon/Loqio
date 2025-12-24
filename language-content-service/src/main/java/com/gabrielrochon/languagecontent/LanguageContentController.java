@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class HomeController
+public class LanguageContentController
 {
 	@Autowired
 	private LanguageService languageService;
@@ -26,7 +26,7 @@ public class HomeController
 	private SentenceService sentenceService;
 
 	@GetMapping("/")
-	public String home()
+	public String hello()
 	{
 		return "Hello, World!";
 	}
