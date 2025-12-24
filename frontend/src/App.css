@@ -30,6 +30,11 @@
 
 .App-main {
   padding-top: 80px; /* Space for header */
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-link {
@@ -52,6 +57,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   min-width: 200px;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
 }
 
 .language-card:hover {
@@ -83,6 +91,23 @@
   font-size: 12px !important;
   color: #618B4A !important;
   margin-top: 5px !important;
+}
+
+.language-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.language-card-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: left;
 }
 
 .back-button {

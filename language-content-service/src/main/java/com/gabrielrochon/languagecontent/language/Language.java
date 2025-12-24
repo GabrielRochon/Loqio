@@ -25,12 +25,21 @@ public class Language
 	// The name of the language.
 	private String name;
 
+	// URL for the background image stored in Azure Blob Storage.
+	private String backgroundImageUrl;
+
 	// Constructors
 	public Language() {}
 
 	public Language(String name)
 	{
 		this.name = name;
+	}
+
+	public Language(String name, String backgroundImageUrl)
+	{
+		this.name = name;
+		this.backgroundImageUrl = backgroundImageUrl;
 	}
 
 	// Getters and Setters
@@ -54,12 +63,23 @@ public class Language
 		this.name = name;
 	}
 
+	public String getBackgroundImageUrl()
+	{
+		return backgroundImageUrl;
+	}
+
+	public void setBackgroundImageUrl(String backgroundImageUrl)
+	{
+		this.backgroundImageUrl = backgroundImageUrl;
+	}
+
 	@Override
 	public String toString()
 	{
 		return "Language{" +
 				"id=" + id +
 				", name='" + name + '\'' +
+				", backgroundImageUrl='" + backgroundImageUrl + '\'' +
 				'}';
 	}
 }

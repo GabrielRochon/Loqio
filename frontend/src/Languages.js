@@ -7,6 +7,7 @@ function Languages() {
   const [languages, setLanguages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
 
   useEffect(() => {
     fetchLanguages();
@@ -35,7 +36,7 @@ function Languages() {
 
   return (
     <div className="App-main">
-      <h2>Available Languages</h2>
+      <h1>What language would you like to learn today?</h1>
       {languages.length === 0 ? (
         <p>No languages available. Add some languages to get started!</p>
       ) : (
@@ -45,10 +46,17 @@ function Languages() {
               key={language.id}
               className="language-card clickable"
               onClick={() => handleLanguageClick(language.id)}
+              style={{
+                backgroundImage: !imageErrors[language.id] ? `url(http://localhost:8082/images/${language.name}/background.jpg)` : undefined,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundColor: imageErrors[language.id] ? '#E5DCC5' : undefined
+              }}
             >
-              <h3>{language.name}</h3>
-              <p>ID: {language.id}</p>
-              <p className="click-hint">Click to view modules</p>
+              {!imageErrors[language.id] && <div className="language-card-overlay"></div>}
+              <div className="language-card-content">
+                <h3 style={{ color: !imageErrors[language.id] ? 'white' : '#4A5899' }}>{language.name}</h3>
+              </div>
             </div>
           ))}
         </div>
