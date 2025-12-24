@@ -1,74 +1,13 @@
 # Loqio Microservices Architecture
 
-This document explains the microservice architecture of the Loqio language learning platform. We've evolved from a monolithic application to a microservices-based system, breaking down functionality into independent, deployable services. Each service has clear boundaries, responsibilities, and data ownership.
-
-## Microservice Architecture Overview
-
-Loqio now consists of multiple independent services that communicate with each other. This architecture provides:
-- **Scalability**: Each service can be scaled independently
-- **Technology Flexibility**: Services can use different technologies
-- **Fault Isolation**: Issues in one service don't affect others
-- **Independent Deployment**: Services can be updated without affecting the entire system
+This document explains the microservice architecture of the Loqio language learning platform.  Each service has clear boundaries, responsibilities, and data ownership.
 
 ## Current Microservices
 
-### 1. Hello World Service
-**Purpose**: Demonstration microservice for learning microservice concepts
-
-**Boundaries & Responsibilities**:
-- Provides a simple REST endpoint
-- Returns static "Hello, World!" response
-- Serves as a template for new microservices
-
-**Technical Details**:
-- **Port**: 8081
-- **Database**: None (stateless service)
-- **Endpoints**: `GET /` → "Hello, World!"
-- **Package**: `com.gabrielrochon.helloworld`
-
-**Configuration**:
-```
-server.port=8081
-spring.application.name=hello-world-service
-```
-
-### 2. Language Content Service
-**Purpose**: Manages language learning content and vocabulary data
-
-**Boundaries & Responsibilities**:
-- Stores and retrieves vocabulary items
-- Manages language content (Tagalog-English translations)
-- Provides CRUD operations for vocabulary data
-- Owns the vocabulary domain logic
-
-**Technical Details**:
-- **Port**: 8082
-- **Database**: PostgreSQL (vocabulary table)
-- **Endpoints**:
-  - `GET /` → "Hello, World!" (placeholder)
-  - `GET /items` → List all vocabulary items
-- **Package**: `com.gabrielrochon.languagecontent`
-
-**Database Configuration**:
-```
-spring.datasource.url=jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?sslmode=require
-spring.datasource.username=${DB_USERNAME:postgres}
-spring.datasource.password=${DB_PASSWORD:password}
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
-
-## Data Ownership & Boundaries
-
-### Database Ownership
-- **Language Content Service**: Owns PostgreSQL `vocabulary` table
-- **Future Services**: Each service will own its own database schema
-
-### Service Boundaries
-- **No Shared Databases**: Each service manages its own data
-- **Independent Scaling**: Services can be deployed on different infrastructure
-- **API Communication**: Services communicate via REST APIs (future implementation)
+| Service | Purpose | Boundaries & Responsibilities | Technical Details |
+|---------|---------|------------------------------|-------------------|
+| **Hello World Service** | Demonstration microservice for learning microservice concepts | - Provides a simple REST endpoint<br>- Returns static "Hello, World!" response<br>- Serves as a template for new microservices | - **Port**: 8081<br>- **Database**: None (stateless service)<br>- **Endpoints**: `GET /` → "Hello, World!" |
+| **Language Content Service** | Manages language learning content and vocabulary data | - Stores and retrieves vocabulary items<br>- Manages language content (Tagalog-English translations)<br>- Provides CRUD operations for vocabulary data<br>- Owns the vocabulary domain logic | - **Port**: 8082<br>- **Database**: PostgreSQL (vocabulary table)<br>- **Endpoints**:<br>  - `GET /` → "Hello, World!" (placeholder)<br>  - `GET /items` → List all vocabulary items |
 
 ## Service Communication & Future Architecture
 
@@ -84,14 +23,14 @@ As we add more microservices (User Progress, Authentication, Analytics), they wi
 The Language Content Service connects to Azure PostgreSQL using these configuration settings in `language-content-service/src/main/resources/application.properties`:
 
 ```
-spring.datasource.url=jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?sslmode=require
-spring.datasource.username=${DB_USERNAME:postgres}
-spring.datasource.password=${DB_PASSWORD:password}
+spring.datasource.url=jdbc:postgresql://${VOCABULARY_DB_HOST:localhost}:${VOCABULARY_DB_PORT:5432}/${VOCABULARY_DB_NAME:postgres}?sslmode=require
+spring.datasource.username=${VOCABULARY_DB_USERNAME:postgres}
+spring.datasource.password=${VOCABULARY_DB_PASSWORD:password}
 ```
 
 - **JDBC URL**: Tells the service how to connect to its database
 - **SSL Mode**: Ensures secure connection to Azure (required)
-- **Environment Variables**: Database credentials are stored as environment variables for security
+- **Environment Variables**: Service-specific database credentials loaded from `.env` file
 
 ### The Three Key Components
 

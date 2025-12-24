@@ -22,14 +22,29 @@ To run individual services:
 - Hello World: `.\gradlew :hello-world-service:bootRun`
 - Language Content: `.\gradlew :language-content-service:bootRun`
 
+## Running the Frontend
+
+To run the React frontend application:
+
+```bash
+cd frontend
+npm start
+```
+
+This will start the React development server on http://localhost:3000/
+
+**Prerequisites:**
+- Node.js and npm must be installed
+- Backend services must be running (see above)
+
 ## Learning Checklist
 
 |   | Category | Technology Used | Microservice Requiring Creation | Feature |
 | - | -------- | --------------- | ------------------------------- | ------- |
 | ✅ | Backend (Microservice-Friendly) | Java / SpringBoot | - | Basic project skeleton |
 | ✅ | Unit Tests | JUnit | - | Basic endpoint tests |
-| 🏗️ | Relational DB | PostgreSQL | Language Content | Fetch a list of languages and their curriculum |
-| ⬜ | UI | React | - | Display the list of words per language |
+| ✅ | Relational DB | PostgreSQL | Language Content | Fetch a list of languages and their curriculum |
+| 🏗️ | UI | React | - | Navigate to a language course and display the modules / sentences per module |
 | ⬜ | Non-Relational DB | MongoDB | User Progress | Track the words learned and experience points of a user |
 | ⬜ | Rest API Documentation | Swagger | - | Document all microservices' API endpoints 
 | ⬜ | Caching | Redis | - | Reduce operation time to fetch the same language's curriculum many times |
