@@ -14,18 +14,26 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #E5DCC5;
+  height: 60px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.App-main {
+  padding-top: 80px; /* Space for header */
 }
 
 .App-link {
-  color: #61dafb;
+  color: #618B4A;
 }
 
 .languages-list {
@@ -38,10 +46,10 @@
 }
 
 .language-card {
-  background-color: #444;
+  background-color: #E5DCC5;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   min-width: 200px;
 }
@@ -52,13 +60,13 @@
 
 .language-card h3 {
   margin: 0 0 10px 0;
-  color: #61dafb;
+  color: #4A5899;
 }
 
 .language-card p {
   margin: 0;
   font-size: 14px;
-  color: #ccc;
+  color: #40531B;
 }
 
 .language-card.clickable {
@@ -68,19 +76,19 @@
 
 .language-card.clickable:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .click-hint {
   font-size: 12px !important;
-  color: #61dafb !important;
+  color: #618B4A !important;
   margin-top: 5px !important;
 }
 
 .back-button {
-  background-color: #444;
-  border: 1px solid #61dafb;
-  color: #61dafb;
+  background-color: #E5DCC5;
+  border: 1px solid #4A5899;
+  color: #4A5899;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
@@ -90,8 +98,8 @@
 }
 
 .back-button:hover {
-  background-color: #61dafb;
-  color: #282c34;
+  background-color: #4A5899;
+  color: #F6F0ED;
 }
 
 .modules-list {
@@ -104,10 +112,10 @@
 }
 
 .module-card {
-  background-color: #555;
+  background-color: #E5DCC5;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   min-width: 250px;
   text-align: left;
@@ -115,17 +123,18 @@
 
 .module-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .module-card h3 {
   margin: 0 0 10px 0;
-  color: #61dafb;
+  color: #4A5899;
 }
 
 .module-card p {
   margin: 5px 0;
   font-size: 14px;
-  color: #ccc;
+  color: #40531B;
 }
 
 .sentences-container {
@@ -169,7 +178,7 @@
 }
 
 .sentence-bubble.speaker-1 .sentence-content {
-  background-color: #007bff;
+  background-color: #618B4A;
   color: white;
   margin-left: 0;
   text-align: left;
@@ -184,12 +193,12 @@
   height: 0;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  border-right: 8px solid #007bff;
+  border-right: 8px solid #618B4A;
 }
 
 .sentence-bubble.speaker-2 .sentence-content {
-  background-color: #e3f2fd;
-  color: #333;
+  background-color: #E5DCC5;
+  color: #4A5899;
   margin-right: 0;
   text-align: right;
 }
@@ -203,7 +212,7 @@
   height: 0;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  border-left: 8px solid #e3f2fd;
+  border-left: 8px solid #E5DCC5;
 }
 
 .learning-text {

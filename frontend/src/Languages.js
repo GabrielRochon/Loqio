@@ -31,31 +31,28 @@ function Languages() {
     navigate(`/language/${languageId}/modules`);
   };
 
-  if (error) return <div className="App">Error: {error}</div>;
+  if (error) return <div className="App-main">Error: {error}</div>;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Loqio - Language Learning Platform</h1>
-        <h2>Available Languages</h2>
-        {languages.length === 0 ? (
-          <p>No languages available. Add some languages to get started!</p>
-        ) : (
-          <div className="languages-list">
-            {languages.map(language => (
-              <div
-                key={language.id}
-                className="language-card clickable"
-                onClick={() => handleLanguageClick(language.id)}
-              >
-                <h3>{language.name}</h3>
-                <p>ID: {language.id}</p>
-                <p className="click-hint">Click to view modules</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </header>
+    <div className="App-main">
+      <h2>Available Languages</h2>
+      {languages.length === 0 ? (
+        <p>No languages available. Add some languages to get started!</p>
+      ) : (
+        <div className="languages-list">
+          {languages.map(language => (
+            <div
+              key={language.id}
+              className="language-card clickable"
+              onClick={() => handleLanguageClick(language.id)}
+            >
+              <h3>{language.name}</h3>
+              <p>ID: {language.id}</p>
+              <p className="click-hint">Click to view modules</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -47,34 +47,32 @@ function Modules() {
     navigate(`/module/${moduleId}/sentences`);
   };
 
-  if (loading) return <div className="App"><header className="App-header"><p>Loading...</p></header></div>;
-  if (error) return <div className="App">Error: {error}</div>;
+  if (loading) return <div className="App-main"><p>Loading...</p></div>;
+  if (error) return <div className="App-main">Error: {error}</div>;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={handleBackToLanguages} className="back-button">
-          ← Back to Languages
-        </button>
-        <h1>{language ? language.name : 'Language'} Modules</h1>
-        {modules.length === 0 ? (
-          <p>No modules available for this language at the moment.</p>
-        ) : (
-          <div className="modules-list">
-            {modules.map(module => (
-              <div
-                key={module.id}
-                className="module-card clickable"
-                onClick={() => handleModuleClick(module.id)}
-              >
-                <h3>{module.name}</h3>
-                <p>ID: {module.id}</p>
-                <p className="click-hint">Click to view sentences</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </header>
+    <div className="App-main">
+      <button onClick={handleBackToLanguages} className="back-button">
+        ← Back to Languages
+      </button>
+      <h1>{language ? language.name : 'Language'} Modules</h1>
+      {modules.length === 0 ? (
+        <p>No modules available for this language at the moment.</p>
+      ) : (
+        <div className="modules-list">
+          {modules.map(module => (
+            <div
+              key={module.id}
+              className="module-card clickable"
+              onClick={() => handleModuleClick(module.id)}
+            >
+              <h3>{module.name}</h3>
+              <p>ID: {module.id}</p>
+              <p className="click-hint">Click to view sentences</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
