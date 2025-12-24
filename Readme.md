@@ -22,6 +22,21 @@ To run individual services:
 - Hello World: `.\gradlew :hello-world-service:bootRun`
 - Language Content: `.\gradlew :language-content-service:bootRun`
 
+## Running the Frontend
+
+To run the React frontend application:
+
+```bash
+cd frontend
+npm start
+```
+
+This will start the React development server on http://localhost:3000/
+
+**Prerequisites:**
+- Node.js and npm must be installed
+- Backend services must be running (see above)
+
 ## Learning Checklist
 
 |   | Category | Technology Used | Microservice Requiring Creation | Feature |
