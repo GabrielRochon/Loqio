@@ -27,4 +27,25 @@ public class ModuleService
 	{
 		return moduleRepository.findByLanguageId(languageId);
 	}
+
+	/**
+	 * Adds a new module to the database.
+	 *
+	 * @param module the module to add
+	 * @return the saved module entity
+	 */
+	public Module addModule(Module module)
+	{
+		return moduleRepository.save(module);
+	}
+
+	/**
+	 * Deletes a module from the database by its ID.
+	 *
+	 * @param id the ID of the module to delete
+	 */
+	public void deleteModule(Long id)
+	{
+		moduleRepository.deleteById(id);
+	}
 }

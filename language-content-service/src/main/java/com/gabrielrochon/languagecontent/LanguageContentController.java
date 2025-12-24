@@ -60,11 +60,23 @@ public class LanguageContentController
 		return moduleService.getModulesByLanguageId(id);
 	}
 
+	@PostMapping("/modules")
+	public Module addModule(@RequestBody Module module)
+	{
+		return moduleService.addModule(module);
+	}
+
+	@DeleteMapping("/modules/{id}")
+	public void deleteModule(@PathVariable Long id)
+	{
+		moduleService.deleteModule(id);
+	}
+
 	// Sentences endpoints
 	@GetMapping("/modules/{id}/sentences")
 	public List<Sentence> getSentencesByModule(@PathVariable Long id)
 	{
 		return sentenceService.getSentencesByModuleId(id);
 	}
-
+	
 }
