@@ -26,4 +26,15 @@ public class LanguageService
 	{
 		return languageRepository.findAll();
 	}
+
+	/**
+	 * Adds a new language to the database.
+	 *
+	 * @param language the language to add
+	 * @return the saved language entity
+	 */
+	public Language addLanguage(Language language)
+	{
+		return languageRepository.save(language);
+	}
 }
