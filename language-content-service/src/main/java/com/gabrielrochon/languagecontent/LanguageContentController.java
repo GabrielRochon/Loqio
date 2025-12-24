@@ -7,6 +7,7 @@ import com.gabrielrochon.languagecontent.module.ModuleService;
 import com.gabrielrochon.languagecontent.sentence.Sentence;
 import com.gabrielrochon.languagecontent.sentence.SentenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,7 @@ public class LanguageContentController
 		return "Hello, World!";
 	}
 
+	// Languages endpoints
 	@GetMapping("/languages")
 	public List<Language> getAllLanguages()
 	{
@@ -45,12 +47,20 @@ public class LanguageContentController
 		return languageService.addLanguage(language);
 	}
 
+	@DeleteMapping("/languages/{id}")
+	public void deleteLanguage(@PathVariable Long id)
+	{
+		languageService.deleteLanguage(id);
+	}
+
+	// Modules endpoints
 	@GetMapping("/languages/{id}")
 	public List<Module> getModulesByLanguage(@PathVariable Long id)
 	{
 		return moduleService.getModulesByLanguageId(id);
 	}
 
+	// Sentences endpoints
 	@GetMapping("/modules/{id}/sentences")
 	public List<Sentence> getSentencesByModule(@PathVariable Long id)
 	{

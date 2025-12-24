@@ -37,4 +37,14 @@ public class LanguageService
 	{
 		return languageRepository.save(language);
 	}
+
+	/**
+	 * Deletes a language from the database by its ID.
+	 *
+	 * @param id the ID of the language to delete
+	 */
+	public void deleteLanguage(Long id)
+	{
+		languageRepository.deleteById(id);
+	}
 }

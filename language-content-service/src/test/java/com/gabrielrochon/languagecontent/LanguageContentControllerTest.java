@@ -58,4 +58,18 @@ public class LanguageContentControllerTest {
         assertThat(languages.stream().anyMatch(l -> "French".equals(l.getName()))).isTrue();
         assertThat(languages.stream().anyMatch(l -> "Tagalog".equals(l.getName()))).isFalse();
     }
+
+    @Test
+    public void testDeleteLanguage() {
+        // Arrange
+        Language newLanguage = new Language("Spanish");
+        Language savedLanguage = languageService.addLanguage(newLanguage);
+
+        // Act
+        languageService.deleteLanguage(savedLanguage.getId());
+
+        // Assert
+        List<Language> languages = languageService.getAllLanguages();
+        assertThat(languages.stream().noneMatch(l -> "Spanish".equals(l.getName()))).isTrue();
+    }
 }

@@ -9,3 +9,6 @@ Invoke-WebRequest -Uri http://localhost:8082/languages
 
 # Add a language
 Invoke-WebRequest -Method POST -Uri http://localhost:8082/languages -Headers @{ "Content-Type" = "application/json" } -Body '{"name":"Italian"}'
+
+# Delete a language by ID
+Invoke-WebRequest -Method DELETE -Uri http://localhost:8082/languages/1
