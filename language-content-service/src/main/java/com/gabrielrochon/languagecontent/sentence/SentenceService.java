@@ -39,5 +39,26 @@ public class SentenceService
 	{
 		return sentenceRepository.findByModuleLanguageId(languageId);
 	}
-	
+
+	/**
+	 * Adds a new sentence to the database.
+	 *
+	 * @param sentence the sentence to add
+	 * @return the saved sentence entity
+	 */
+	public Sentence addSentence(Sentence sentence)
+	{
+		return sentenceRepository.save(sentence);
+	}
+
+	/**
+	 * Deletes a sentence from the database by its ID.
+	 *
+	 * @param id the ID of the sentence to delete
+	 */
+	public void deleteSentence(Long id)
+	{
+		sentenceRepository.deleteById(id);
+	}
+
 }

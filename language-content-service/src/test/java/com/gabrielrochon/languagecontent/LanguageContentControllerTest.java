@@ -4,6 +4,8 @@ import com.gabrielrochon.languagecontent.language.Language;
 import com.gabrielrochon.languagecontent.language.LanguageService;
 import com.gabrielrochon.languagecontent.module.Module;
 import com.gabrielrochon.languagecontent.module.ModuleService;
+import com.gabrielrochon.languagecontent.sentence.Sentence;
+import com.gabrielrochon.languagecontent.sentence.SentenceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,9 @@ public class LanguageContentControllerTest {
     @Autowired
     private ModuleService moduleService;
 
+    @Autowired
+    private SentenceService sentenceService;
+
     @Test
     public void testAddLanguage() {
         // Arrange
@@ -44,8 +49,8 @@ public class LanguageContentControllerTest {
     @Test
     public void testGetAllLanguages() {
         // Arrange
-        Language newLanguage1 = new Language("Klingon");
-        Language newLanguage2 = new Language("French");
+        Language newLanguage1 = new Language("Tagalog");
+        Language newLanguage2 = new Language("English");
         languageService.addLanguage(newLanguage1);
         languageService.addLanguage(newLanguage2);
 
@@ -54,9 +59,9 @@ public class LanguageContentControllerTest {
 
         // Assert
         assertThat(languages).isNotEmpty();
-        assertThat(languages.stream().anyMatch(l -> "Klingon".equals(l.getName()))).isTrue();
-        assertThat(languages.stream().anyMatch(l -> "French".equals(l.getName()))).isTrue();
-        assertThat(languages.stream().anyMatch(l -> "Tagalog".equals(l.getName()))).isFalse();
+        assertThat(languages.stream().anyMatch(l -> "Tagalog".equals(l.getName()))).isTrue();
+        assertThat(languages.stream().anyMatch(l -> "English".equals(l.getName()))).isTrue();
+        assertThat(languages.stream().anyMatch(l -> "Spanish".equals(l.getName()))).isFalse();
     }
 
     @Test
@@ -76,7 +81,7 @@ public class LanguageContentControllerTest {
     @Test
     public void testGetModulesByLanguageId() {
         // Arrange
-        Language newLanguage = new Language("German");
+        Language newLanguage = new Language("Tagalog");
         Language savedLanguage = languageService.addLanguage(newLanguage);
 
         Module module1 = new Module(savedLanguage, "Basic Greetings");
@@ -97,28 +102,28 @@ public class LanguageContentControllerTest {
     @Test
     public void testAddModule() {
         // Arrange
-        Language newLanguage = new Language("Japanese");
+        Language newLanguage = new Language("Tagalog");
         Language savedLanguage = languageService.addLanguage(newLanguage);
 
-        Module newModule = new Module(savedLanguage, "Hiragana");
+        Module newModule = new Module(savedLanguage, "Basic Vocabulary");
 
         // Act
         Module savedModule = moduleService.addModule(newModule);
 
         // Assert
         assertThat(savedModule).isNotNull();
-        assertThat(savedModule.getName()).isEqualTo("Hiragana");
+        assertThat(savedModule.getName()).isEqualTo("Basic Vocabulary");
         assertThat(savedModule.getId()).isNotNull();
-        assertThat(savedModule.getLanguage().getName()).isEqualTo("Japanese");
+        assertThat(savedModule.getLanguage().getName()).isEqualTo("Tagalog");
     }
 
     @Test
     public void testDeleteModule() {
         // Arrange
-        Language newLanguage = new Language("Chinese");
+        Language newLanguage = new Language("Tagalog");
         Language savedLanguage = languageService.addLanguage(newLanguage);
 
-        Module newModule = new Module(savedLanguage, "Mandarin Basics");
+        Module newModule = new Module(savedLanguage, "Basic Phrases");
         Module savedModule = moduleService.addModule(newModule);
 
         // Act
@@ -126,6 +131,49 @@ public class LanguageContentControllerTest {
 
         // Assert
         List<Module> modules = moduleService.getModulesByLanguageId(savedLanguage.getId());
-        assertThat(modules.stream().noneMatch(m -> "Mandarin Basics".equals(m.getName()))).isTrue();
+        assertThat(modules.stream().noneMatch(m -> "Basic Phrases".equals(m.getName()))).isTrue();
+    }
+
+    @Test
+    public void testAddSentence() {
+        // Arrange
+        Language newLanguage = new Language("Tagalog");
+        Language savedLanguage = languageService.addLanguage(newLanguage);
+
+        Module newModule = new Module(savedLanguage, "Greetings");
+        Module savedModule = moduleService.addModule(newModule);
+
+        Sentence newSentence = new Sentence(savedModule, 1, "Kumusta", "Hello", 1);
+
+        // Act
+        Sentence savedSentence = sentenceService.addSentence(newSentence);
+
+        // Assert
+        assertThat(savedSentence).isNotNull();
+        assertThat(savedSentence.getLearningText()).isEqualTo("Kumusta");
+        assertThat(savedSentence.getTranslationText()).isEqualTo("Hello");
+        assertThat(savedSentence.getPosition()).isEqualTo(1);
+        assertThat(savedSentence.getSpeaker()).isEqualTo(1);
+        assertThat(savedSentence.getId()).isNotNull();
+    }
+
+    @Test
+    public void testDeleteSentence() {
+        // Arrange
+        Language newLanguage = new Language("Tagalog");
+        Language savedLanguage = languageService.addLanguage(newLanguage);
+
+        Module newModule = new Module(savedLanguage, "Polite Expressions");
+        Module savedModule = moduleService.addModule(newModule);
+
+        Sentence newSentence = new Sentence(savedModule, 1, "Salamat", "Thank you", 1);
+        Sentence savedSentence = sentenceService.addSentence(newSentence);
+
+        // Act
+        sentenceService.deleteSentence(savedSentence.getId());
+
+        // Assert
+        List<Sentence> sentences = sentenceService.getSentencesByModuleId(savedModule.getId());
+        assertThat(sentences.stream().noneMatch(s -> "Salamat".equals(s.getLearningText()))).isTrue();
     }
 }

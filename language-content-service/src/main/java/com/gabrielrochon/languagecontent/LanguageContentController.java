@@ -78,5 +78,17 @@ public class LanguageContentController
 	{
 		return sentenceService.getSentencesByModuleId(id);
 	}
-	
+
+	@PostMapping("/sentences")
+	public Sentence addSentence(@RequestBody Sentence sentence)
+	{
+		return sentenceService.addSentence(sentence);
+	}
+
+	@DeleteMapping("/sentences/{id}")
+	public void deleteSentence(@PathVariable Long id)
+	{
+		sentenceService.deleteSentence(id);
+	}
+
 }
