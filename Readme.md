@@ -52,7 +52,7 @@ This will start the React development server on http://localhost:3000/
 | ✅ | Backend (Microservice-Friendly) | <ul><li>Java</li><li>SpringBoot</li></ul> | - | <ul><li>Basic project skeleton</li></ul> |
 | ✅ | Unit Tests | <ul><li>JUnit</li></ul> | - | <ul><li>Basic endpoint tests</li></ul> |
 | ✅ | Relational DB | <ul><li>PostgreSQL</li></ul> | Language Content | <ul><li>Fetch a list of languages</li><li>Fetch their curriculum</li></ul> |
-| 🏗️ | UI | <ul><li>React</li><li>Azure Blob Storage</li></ul> | - | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
+| 🏗️ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | - | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
 | ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
 | ⬜ | Rest API Documentation | <ul><li>Swagger</li></ul> | - | <ul><li>Document all microservices' API endpoints</li></ul>
 | ⬜ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
