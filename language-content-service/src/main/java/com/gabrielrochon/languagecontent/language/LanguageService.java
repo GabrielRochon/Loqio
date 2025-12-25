@@ -50,6 +50,23 @@ public class LanguageService
 	}
 
 	/**
+	 * Updates an existing language in the database.
+	 *
+	 * @param id the ID of the language to update
+	 * @param language the updated language data
+	 * @return the updated language entity
+	 */
+	public Language updateLanguage(Long id, Language language)
+	{
+		Language existingLanguage = languageRepository.findById(id).orElseThrow(() -> new RuntimeException("Language not found"));
+		existingLanguage.setName(language.getName());
+		existingLanguage.setBackgroundImageUrl(language.getBackgroundImageUrl());
+		existingLanguage.setCountryCode(language.getCountryCode());
+		existingLanguage.setLanguagePresentation(language.getLanguagePresentation());
+		return languageRepository.save(existingLanguage);
+	}
+
+	/**
 	 * Deletes a language from the database by its ID.
 	 *
 	 * @param id the ID of the language to delete

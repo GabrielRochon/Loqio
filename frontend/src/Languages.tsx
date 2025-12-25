@@ -6,6 +6,7 @@ interface LanguageData {
   id: number;
   name: string;
   countryCode?: string;
+  backgroundImageUrl?: string;
 }
 
 function Languages() {
@@ -43,32 +44,45 @@ function Languages() {
         <p>No languages available. Add some languages to get started!</p>
       ) : (
         <div className="languages-list">
-          {languages.map(language => (
-            <div
-              key={language.id}
-              className="language-card clickable"
-              onClick={() => handleLanguageClick(language.name)}
-            >
-              <div className="language-card-overlay"></div>
-              <div className="language-card-content">
-                <h3>{language.name}</h3>
-                <img
-                  src={`https://flagcdn.com/${language.countryCode?.toLowerCase()}.svg`}
-                  alt={`${language.name} Flag`}
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    right: '0',
-                    width: '36px',
-                    height: '24px',
-                    borderRadius: '2px',
-                    objectFit: 'cover',
-                    transform: 'translateY(-50%)'
-                  }}
-                />
+          {languages.map(language => {
+            const backgroundImageUrl = language.backgroundImageUrl ?
+              (language.backgroundImageUrl.includes('blob.core.windows.net') ?
+                language.backgroundImageUrl.replace('https://languagesprod.blob.core.windows.net/languages/', 'http://localhost:8082/images/').replace('tagalog', 'Tagalog') :
+                language.backgroundImageUrl) :
+              null;
+
+            return (
+              <div
+                key={language.id}
+                className="language-card clickable"
+                onClick={() => handleLanguageClick(language.name)}
+                style={backgroundImageUrl ? {
+                  backgroundImage: `url(${backgroundImageUrl})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                } : {}}
+              >
+                {!language.backgroundImageUrl && <div className="language-card-overlay"></div>}
+                <div className="language-card-content">
+                  <h3 style={{ color: 'white' }}>{language.name}</h3>
+                  <img
+                    src={`https://flagcdn.com/${language.countryCode?.toLowerCase()}.svg`}
+                    alt={`${language.name} Flag`}
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      right: '0',
+                      width: '36px',
+                      height: '24px',
+                      borderRadius: '2px',
+                      objectFit: 'cover',
+                      transform: 'translateY(-50%)'
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
