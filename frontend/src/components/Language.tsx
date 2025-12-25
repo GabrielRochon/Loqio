@@ -83,7 +83,7 @@ function Language() {
           />
         </div>
         <p style={{ textAlign: 'left', color: !imageError ? 'white' : '#4A5899', alignSelf: 'flex-start', fontSize: '1rem', margin: '0 0 20px 0', maxWidth: '600px', overflowWrap: 'break-word' }}>{language && language.languagePresentation ? language.languagePresentation : 'No language presentation available.'}</p>
-        <button onClick={handleBeginJourney} style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'white' : '#618B4A', color: !imageError ? '#4A5899' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
+        <button onClick={handleBeginJourney} className="begin-journey-button" style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'white' : '#618B4A', color: !imageError ? '#4A5899' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
       </div>
     </div>
   );
