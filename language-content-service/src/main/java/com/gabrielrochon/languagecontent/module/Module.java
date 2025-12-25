@@ -34,6 +34,15 @@ public class Module
 	// The name of the module.
 	private String name;
 
+	// Description of the module.
+	private String description;
+
+	// Presentation content for the module.
+	private String modulePresentation;
+
+	// Material icon name for the module.
+	private String materialIconName;
+
 	// Constructors
 	public Module() {}
 
@@ -41,6 +50,30 @@ public class Module
 	{
 		this.language = language;
 		this.name = name;
+	}
+
+	public Module(Language language, String name, String description)
+	{
+		this.language = language;
+		this.name = name;
+		this.description = description;
+	}
+
+	public Module(Language language, String name, String description, String modulePresentation)
+	{
+		this.language = language;
+		this.name = name;
+		this.description = description;
+		this.modulePresentation = modulePresentation;
+	}
+
+	public Module(Language language, String name, String description, String modulePresentation, String materialIconName)
+	{
+		this.language = language;
+		this.name = name;
+		this.description = description;
+		this.modulePresentation = modulePresentation;
+		this.materialIconName = materialIconName;
 	}
 
 	// Getters and Setters
@@ -74,6 +107,36 @@ public class Module
 		this.name = name;
 	}
 
+	public String getDescription()
+	{
+		return description;
+	}
+
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	public String getModulePresentation()
+	{
+		return modulePresentation;
+	}
+
+	public void setModulePresentation(String modulePresentation)
+	{
+		this.modulePresentation = modulePresentation;
+	}
+
+	public String getMaterialIconName()
+	{
+		return materialIconName;
+	}
+
+	public void setMaterialIconName(String materialIconName)
+	{
+		this.materialIconName = materialIconName;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -81,6 +144,9 @@ public class Module
 				"id=" + id +
 				", language=" + (language != null ? language.getId() : null) +
 				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", modulePresentation='" + modulePresentation + '\'' +
+				", materialIconName='" + materialIconName + '\'' +
 				'}';
 	}
 }
