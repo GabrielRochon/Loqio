@@ -11,9 +11,7 @@ interface LanguageData {
 function Languages() {
   const navigate = useNavigate();
   const [languages, setLanguages] = useState<LanguageData[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     fetchLanguages();
@@ -27,10 +25,8 @@ function Languages() {
       }
       const data = await response.json();
       setLanguages(data);
-      setLoading(false);
     } catch (err) {
       setError((err as Error).message);
-      setLoading(false);
     }
   };
 
@@ -52,16 +48,10 @@ function Languages() {
               key={language.id}
               className="language-card clickable"
               onClick={() => handleLanguageClick(language.name)}
-              style={{
-                backgroundImage: !imageErrors[language.id] ? `url(http://localhost:8082/images/${language.name}/background.jpg)` : undefined,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundColor: imageErrors[language.id] ? '#E5DCC5' : undefined
-              }}
             >
-              {!imageErrors[language.id] && <div className="language-card-overlay"></div>}
+              <div className="language-card-overlay"></div>
               <div className="language-card-content">
-                <h3 style={{ color: !imageErrors[language.id] ? 'white' : '#4A5899' }}>{language.name}</h3>
+                <h3>{language.name}</h3>
                 <img
                   src={`https://flagcdn.com/${language.countryCode?.toLowerCase()}.svg`}
                   alt={`${language.name} Flag`}

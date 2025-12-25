@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './App.scss';
 
@@ -16,20 +16,7 @@ function Language() {
   const [error, setError] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
 
-  useEffect(() => {
-    fetchLanguage();
-  }, [languageName]);
-
-  useEffect(() => {
-    if (language) {
-      const img = new Image();
-      img.onload = () => setImageError(false);
-      img.onerror = () => setImageError(true);
-      img.src = `http://localhost:8082/images/${language.name}/background.jpg`;
-    }
-  }, [language]);
-
-  const fetchLanguage = async () => {
+  const fetchLanguage = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:8082/languages/${languageName}`);
       if (!response.ok) {
@@ -42,7 +29,20 @@ function Language() {
       setError((err as Error).message);
       setLoading(false);
     }
-  };
+  }, [languageName]);
+
+  useEffect(() => {
+    fetchLanguage();
+  }, [fetchLanguage]);
+
+  useEffect(() => {
+    if (language) {
+      const img = new Image();
+      img.onload = () => setImageError(false);
+      img.onerror = () => setImageError(true);
+      img.src = `http://localhost:8082/images/${language.name}/background.jpg`;
+    }
+  }, [language]);
 
   const handleBackToLanguages = () => {
     navigate('/');

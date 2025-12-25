@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './App.scss';
 
@@ -31,11 +31,7 @@ function Sentences() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchSentences();
-  }, [moduleId]);
-
-  const fetchSentences = async () => {
+  const fetchSentences = useCallback(async () => {
     try {
       // Fetch sentences for this module
       const sentencesResponse = await fetch(`http://localhost:8082/modules/${moduleId}/sentences`);
@@ -61,7 +57,11 @@ function Sentences() {
       setError((err as Error).message);
       setLoading(false);
     }
-  };
+  }, [moduleId]);
+
+  useEffect(() => {
+    fetchSentences();
+  }, [fetchSentences]);
 
   const handleBackToModules = () => {
     navigate(-1); // Go back to previous page
