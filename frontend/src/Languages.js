@@ -7,6 +7,7 @@ function Languages() {
   const [languages, setLanguages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
 
   useEffect(() => {
     fetchLanguages();
@@ -27,35 +28,53 @@ function Languages() {
     }
   };
 
-  const handleLanguageClick = (languageId) => {
-    navigate(`/language/${languageId}/modules`);
+  const handleLanguageClick = (languageName) => {
+    navigate(`/languages/${languageName}`);
   };
 
-  if (error) return <div className="App">Error: {error}</div>;
+  if (error) return <div className="App-main">Error: {error}</div>;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Loqio - Language Learning Platform</h1>
-        <h2>Available Languages</h2>
-        {languages.length === 0 ? (
-          <p>No languages available. Add some languages to get started!</p>
-        ) : (
-          <div className="languages-list">
-            {languages.map(language => (
-              <div
-                key={language.id}
-                className="language-card clickable"
-                onClick={() => handleLanguageClick(language.id)}
-              >
-                <h3>{language.name}</h3>
-                <p>ID: {language.id}</p>
-                <p className="click-hint">Click to view modules</p>
+    <div className="App-main">
+      <h1>What language would you like to learn today?</h1>
+      {languages.length === 0 ? (
+        <p>No languages available. Add some languages to get started!</p>
+      ) : (
+        <div className="languages-list">
+          {languages.map(language => (
+            <div
+              key={language.id}
+              className="language-card clickable"
+              onClick={() => handleLanguageClick(language.name)}
+              style={{
+                backgroundImage: !imageErrors[language.id] ? `url(http://localhost:8082/images/${language.name}/background.jpg)` : undefined,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundColor: imageErrors[language.id] ? '#E5DCC5' : undefined
+              }}
+            >
+              {!imageErrors[language.id] && <div className="language-card-overlay"></div>}
+              <div className="language-card-content">
+                <h3 style={{ color: !imageErrors[language.id] ? 'white' : '#4A5899' }}>{language.name}</h3>
+                <img
+                  src={`https://flagcdn.com/${language.countryCode?.toLowerCase()}.svg`}
+                  alt={`${language.name} Flag`}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: '0',
+                    width: '36px',
+                    height: '24px',
+                    borderRadius: '2px',
+                    objectFit: 'cover',
+                    transform: 'translateY(-50%)'
+                  }}
+                />
               </div>
-            ))}
-          </div>
-        )}
-      </header>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

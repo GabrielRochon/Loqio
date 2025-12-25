@@ -39,6 +39,17 @@ public class LanguageService
 	}
 
 	/**
+	 * Retrieves a language by its name.
+	 *
+	 * @param name the name of the language
+	 * @return the Language entity
+	 */
+	public Language getLanguageByName(String name)
+	{
+		return languageRepository.findByName(name);
+	}
+
+	/**
 	 * Deletes a language from the database by its ID.
 	 *
 	 * @param id the ID of the language to delete

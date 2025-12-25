@@ -7,12 +7,16 @@ import com.gabrielrochon.languagecontent.module.ModuleService;
 import com.gabrielrochon.languagecontent.sentence.Sentence;
 import com.gabrielrochon.languagecontent.sentence.SentenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -28,10 +32,52 @@ public class LanguageContentController
 	@Autowired
 	private SentenceService sentenceService;
 
+	@Autowired
+	private AzureBlobService azureBlobService;
+
 	@GetMapping("/")
 	public String hello()
 	{
 		return "Hello, World!";
+	}
+
+	// Test endpoint to verify Azure Storage configuration
+	@GetMapping("/test-azure")
+	public String testAzureConnection()
+	{
+		try
+		{
+			// Try to check if container exists
+			boolean containerExists = azureBlobService.containerExists();
+			// Also check if one of the images exists
+			boolean tagalogImageExists = azureBlobService.blobExists("Tagalog/background.jpg");
+			return "Azure Storage connection successful. Container exists: " + containerExists + ", Tagalog image exists: " + tagalogImageExists;
+		}
+		catch (Exception e)
+		{
+			return "Azure Storage connection failed: " + e.getMessage();
+		}
+	}
+
+	// Image endpoint to serve private blobs from Azure Storage
+	@GetMapping("/images/**")
+	public ResponseEntity<byte[]> getImage(HttpServletRequest request)
+	{
+		String requestURI = request.getRequestURI();
+		String imageName = requestURI.substring("/images/".length());
+		try
+		{
+			System.out.println("Image request for: " + imageName);
+			byte[] imageBytes = azureBlobService.downloadBlob(imageName);
+			System.out.println("Serving image " + imageName + " with " + imageBytes.length + " bytes");
+			return ResponseEntity.ok()
+					.body(imageBytes);
+		}
+		catch (Exception e)
+		{
+			System.err.println("Error serving image " + imageName + ": " + e.getMessage());
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	// Languages endpoints
@@ -53,11 +99,18 @@ public class LanguageContentController
 		languageService.deleteLanguage(id);
 	}
 
-	// Modules endpoints
-	@GetMapping("/languages/{id}")
-	public List<Module> getModulesByLanguage(@PathVariable Long id)
+	// Language details endpoint
+	@GetMapping("/languages/{name}")
+	public Language getLanguageByName(@PathVariable String name)
 	{
-		return moduleService.getModulesByLanguageId(id);
+		return languageService.getLanguageByName(name);
+	}
+
+	// Modules endpoints
+	@GetMapping("/languages/{name}/modules")
+	public List<Module> getModulesByLanguage(@PathVariable String name)
+	{
+		return moduleService.getModulesByLanguageName(name);
 	}
 
 	@PostMapping("/modules")

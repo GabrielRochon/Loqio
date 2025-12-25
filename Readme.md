@@ -6,6 +6,14 @@
 
 This full-stack web application serves as an educational project exploring modern software technologies, from backend microservices and databases to cloud deployment and DevOps practices.
 
+## Setup
+
+Before running the microservices locally, ensure your current IP address is allow-listed in the Azure Portal for the PostgreSQL database to avoid connection timeouts:
+
+1. Go to the Azure Portal and navigate to the `psql-languages-prod` PostgreSQL server resource.
+2. Select **Networking** from the left-hand menu.
+3. Under **Firewall rules**, click **Add current client IP address** to allow-list your IP.
+
 ## Running the Microservices
 
 To run all microservices simultaneously during development:
@@ -44,7 +52,7 @@ This will start the React development server on http://localhost:3000/
 | ✅ | Backend (Microservice-Friendly) | Java / SpringBoot | - | Basic project skeleton |
 | ✅ | Unit Tests | JUnit | - | Basic endpoint tests |
 | ✅ | Relational DB | PostgreSQL | Language Content | Fetch a list of languages and their curriculum |
-| 🏗️ | UI | React | - | Navigate to a language course and display the modules / sentences per module |
+| 🏗️ | UI | React, Azure Blob Storage | - | Navigate to a language course and display the modules / sentences per module, display background images |
 | ⬜ | Non-Relational DB | MongoDB | User Progress | Track the words learned and experience points of a user |
 | ⬜ | Rest API Documentation | Swagger | - | Document all microservices' API endpoints 
 | ⬜ | Caching | Redis | - | Reduce operation time to fetch the same language's curriculum many times |

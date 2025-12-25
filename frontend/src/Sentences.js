@@ -47,33 +47,31 @@ function Sentences() {
     navigate(-1); // Go back to previous page
   };
 
-  if (loading) return <div className="App"><header className="App-header"><p>Loading...</p></header></div>;
-  if (error) return <div className="App">Error: {error}</div>;
+  if (loading) return <div className="App-main"><p>Loading...</p></div>;
+  if (error) return <div className="App-main">Error: {error}</div>;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={handleBackToModules} className="back-button">
-          ← Back
-        </button>
-        <h1>{language ? language.name : 'Language'} - {module ? module.name : 'Module'}</h1>
-        <div className="sentences-container">
-          {sentences.length === 0 ? (
-            <p>No sentences available for this module at the moment.</p>
-          ) : (
-            <div className="sentences-list">
-              {sentences.map((sentence, index) => (
-                <div key={sentence.id} className={`sentence-bubble ${sentence.speaker === 1 ? 'speaker-1' : 'speaker-2'}`}>
-                  <div className="sentence-content">
-                    <div className="learning-text">{sentence.learningText}</div>
-                    <div className="translation-text">{sentence.translationText}</div>
-                  </div>
+    <div className="App-main">
+      <button onClick={handleBackToModules} className="back-button">
+        ← Back
+      </button>
+      <h1>{language ? language.name : 'Language'} - {module ? module.name : 'Module'}</h1>
+      <div className="sentences-container">
+        {sentences.length === 0 ? (
+          <p>No sentences available for this module at the moment.</p>
+        ) : (
+          <div className="sentences-list">
+            {sentences.map((sentence, index) => (
+              <div key={sentence.id} className={`sentence-bubble ${sentence.speaker === 1 ? 'speaker-1' : 'speaker-2'}`}>
+                <div className="sentence-content">
+                  <div className="learning-text">{sentence.learningText}</div>
+                  <div className="translation-text">{sentence.translationText}</div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </header>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
