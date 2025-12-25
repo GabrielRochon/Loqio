@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.scss';
+import '../app/app.scss';
 
 interface LanguageData {
   id: number;

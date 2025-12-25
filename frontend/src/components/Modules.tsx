@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import './App.scss';
+import '../app/app.scss';
 
 interface ModuleData {
   id: number;
