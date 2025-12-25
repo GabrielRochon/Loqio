@@ -9,13 +9,6 @@ This document explains the microservice architecture of the Loqio language learn
 | **Hello World Service** | Demonstration microservice for learning microservice concepts | - Provides a simple REST endpoint<br>- Returns static "Hello, World!" response<br>- Serves as a template for new microservices | - **Port**: 8081<br>- **Database**: None (stateless service)<br>- **Endpoints**: `GET /` → "Hello, World!" |
 | **Language Content Service** | Manages language learning content and vocabulary data | - Stores and retrieves vocabulary items<br>- Manages language content (Tagalog-English translations)<br>- Provides CRUD operations for vocabulary data<br>- Owns the vocabulary domain logic | - **Port**: 8082<br>- **Database**: PostgreSQL (vocabulary table)<br>- **Endpoints**:<br>  - `GET /` → "Hello, World!" (placeholder)<br>  - `GET /items` → List all vocabulary items |
 
-## Service Communication & Future Architecture
-
-As we add more microservices (User Progress, Authentication, Analytics), they will communicate through:
-- **REST APIs**: Synchronous communication between services
-- **Message Queues**: Asynchronous event-driven communication (future Kafka implementation)
-- **API Gateway**: Single entry point for external clients (future implementation)
-
 ## Language Content Service Components
 
 ### Database Connection Setup
@@ -32,149 +25,21 @@ spring.datasource.password=${VOCABULARY_DB_PASSWORD:password}
 - **SSL Mode**: Ensures secure connection to Azure (required)
 - **Environment Variables**: Service-specific database credentials loaded from `.env` file
 
-### The Three Key Components
+## MVC Interactions in Language Content Service
 
-#### 1. Item.java - The Data Model
+In the Language Content Service, the Model-View-Controller (MVC) pattern is implemented as follows:
 
-```java
-/**
- * JPA entity representing a vocabulary item in the PostgreSQL database.
- * This class maps to the "vocabulary" table and contains translations
- * between Tagalog and English words.
- */
-@Entity
-@Table(name = "vocabulary")
-public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;           // Unique identifier (auto-generated)
+- **Model**: The data entities (Language, Module, Sentence) and their corresponding repositories (LanguageRepository, ModuleRepository, SentenceRepository) that handle database interactions.
+- **View**: The JSON responses returned by the controller endpoints, representing the data in a format suitable for client consumption.
+- **Controller**: LanguageContentController handles incoming HTTP requests, delegates business logic to services, and formats the responses.
 
-    private String tagalog;    // The Tagalog word
-    private String english;    // The English translation
-}
-```
+Interactions:
+1. A client sends an HTTP request to a controller endpoint (e.g., GET /languages).
+2. The controller receives the request and invokes the appropriate service method (e.g., languageService.getAllLanguages()).
+3. The service executes business logic and interacts with the repository to query or manipulate model data in the database.
+4. The service returns the model objects (e.g., List<Language>) to the controller.
+5. The controller serializes the model objects into JSON and returns them as the HTTP response (view).
 
-**What it does**: This class represents one row in the Language Content Service's database table. Each `Item` object corresponds to one vocabulary entry with an ID, Tagalog word, and English translation.
+This separation ensures clean architecture: the controller manages request/response handling, services encapsulate business logic, and models represent the data structure and persistence.
 
-#### 2. ItemRepository.java - The Database Access Layer
-
-```java
-/**
- * Repository interface for managing Item entities in the PostgreSQL database.
- * Provides CRUD operations and query methods for vocabulary items.
- * Extends JpaRepository to inherit standard database operations.
- */
-@Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
-    // Custom query methods can be added here if needed
-}
-```
-
-**What it does**: This is like a librarian that knows how to talk to the Language Content Service's database. It automatically provides methods like:
-- `findAll()` - Get all vocabulary items
-- `findById(id)` - Find one item by its ID
-- `save(item)` - Save a new item to the database
-- `delete(item)` - Remove an item from the database
-
-#### 3. ItemService.java - The Business Logic Layer
-
-```java
-/**
- * Service class for managing vocabulary items (Items).
- * Provides business logic for retrieving and manipulating Item data
- * from the PostgreSQL database through the ItemRepository.
- */
-@Service
-public class ItemService {
-
-    @Autowired
-    private ItemRepository itemRepository;
-
-    /**
-     * Retrieves all vocabulary items from the database.
-     * @return List of all Item entities containing Tagalog-English translations
-     */
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
-    }
-}
-```
-
-**What it does**: This is the middleman between the Language Content Service's REST endpoints (controllers) and its database. It contains the business logic and decides what data to fetch and how to process it.
-
-### 4. HomeController.java - The REST API Layer
-
-```java
-@RestController
-public class HomeController {
-    @Autowired
-    private ItemService itemService;
-
-    @GetMapping("/")
-    public String home() {
-        return "Hello, World!";
-    }
-
-    @GetMapping("/items")
-    public List<Item> getAllItems() {
-        return itemService.getAllItems();
-    }
-}
-```
-
-**What it does**: This controller exposes REST endpoints for the Language Content Service:
-- `GET /` - Simple health check endpoint
-- `GET /items` - Returns all vocabulary items from the database
-
-## How Data Flows Through the Language Content Service
-
-1. **Client Request**: A request comes to `http://localhost:8082/items`
-2. **Controller**: `HomeController.getAllItems()` receives the request
-3. **Service**: `ItemService.getAllItems()` processes the business logic
-4. **Repository**: `ItemRepository.findAll()` executes `SELECT * FROM vocabulary`
-5. **Database**: PostgreSQL returns the raw data
-6. **Repository**: Converts database rows into `Item` objects
-7. **Service**: May process the data further (currently just passes through)
-8. **Controller**: Returns the list of `Item` objects as JSON
-9. **Client**: Receives the vocabulary data
-
-## Example: Fetching All Vocabulary Words
-
-When a client requests all vocabulary words from the Language Content Service:
-
-```java
-// In HomeController.java
-@GetMapping("/items")
-public List<Item> getAllItems() {
-    return itemService.getAllItems();  // Calls service
-}
-
-// In ItemService.java
-public List<Item> getAllItems() {
-    return itemRepository.findAll();  // Executes SELECT * FROM vocabulary
-}
-
-// Returns JSON like:
-// [{"id": 1, "tagalog": "kumusta", "english": "hello"}, ...]
-```
-
-## Development & Deployment
-
-### Running Services
-```bash
-# Run all services
-.\gradlew :hello-world-service:bootRun :language-content-service:bootRun
-
-# Run individual services
-.\gradlew :hello-world-service:bootRun      # Port 8081
-.\gradlew :language-content-service:bootRun # Port 8082
-```
-
-### Service URLs
-- **Hello World Service**: http://localhost:8081/
-- **Language Content Service**: http://localhost:8082/
-
-### Future Services (Planned)
-- **User Progress Service**: MongoDB, tracks learning progress (Port 8083)
-- **Authentication Service**: OAuth2, manages user sessions (Port 8084)
-- **Analytics Service**: Metrics collection and reporting (Port 8085)
+![Backend Endpoint Logic](./documentation-assets/BackendEndpointLogic.png)
