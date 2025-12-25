@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -35,6 +35,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.App-main.modules-page {
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .App-link {
@@ -258,6 +265,28 @@
   width: 100%;
   box-sizing: border-box;
   align-self: flex-start;
+}
+
+.modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.module-text h3 {
+  margin: 0 0 5px 0;
+  color: #4A5899;
+  font-size: 1.2rem;
+}
+
+.module-text p {
+  margin: 0;
+  color: #40531B;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {

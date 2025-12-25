@@ -5,6 +5,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import Languages from './Languages';
+import Language from './Language';
 import Modules from './Modules';
 import Sentences from './Sentences';
 import './App.css';
@@ -32,7 +33,8 @@ function App() {
         </AppBar>
         <Routes>
           <Route path="/" element={<Languages />} />
-          <Route path="/languages/:languageName" element={<Modules />} />
+          <Route path="/languages/:languageName" element={<Language />} />
+          <Route path="/languages/:languageName/modules" element={<Modules />} />
           <Route path="/module/:moduleId/sentences" element={<Sentences />} />
         </Routes>
       </div>
