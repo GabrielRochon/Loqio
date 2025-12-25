@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import './App.css';
+import './App.scss';
+
+interface ModuleData {
+  id: number;
+  name: string;
+  description: string;
+}
 
 function Modules() {
-  const { languageName } = useParams();
+  const { languageName } = useParams<string>();
   const navigate = useNavigate();
-  const [modules, setModules] = useState([]);
+  const [modules, setModules] = useState<ModuleData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchModules();
@@ -24,7 +30,7 @@ function Modules() {
       setModules(modulesData);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
     }
   };

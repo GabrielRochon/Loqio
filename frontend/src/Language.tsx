@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './App.css';
+import './App.scss';
+
+interface LanguageData {
+  name: string;
+  countryCode?: string;
+  languagePresentation?: string;
+}
 
 function Language() {
-  const { languageName } = useParams();
+  const { languageName } = useParams<string>();
   const navigate = useNavigate();
-  const [language, setLanguage] = useState(null);
+  const [language, setLanguage] = useState<LanguageData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
@@ -33,7 +39,7 @@ function Language() {
       setLanguage(data);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
     }
   };

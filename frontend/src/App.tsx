@@ -8,7 +8,7 @@ import Languages from './Languages';
 import Language from './Language';
 import Modules from './Modules';
 import Sentences from './Sentences';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (

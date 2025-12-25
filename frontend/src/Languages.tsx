@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+import './App.scss';
+
+interface LanguageData {
+  id: number;
+  name: string;
+  countryCode?: string;
+}
 
 function Languages() {
   const navigate = useNavigate();
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState<LanguageData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [imageErrors, setImageErrors] = useState({});
+  const [error, setError] = useState<string | null>(null);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     fetchLanguages();
@@ -23,12 +29,12 @@ function Languages() {
       setLanguages(data);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
     }
   };
 
-  const handleLanguageClick = (languageName) => {
+  const handleLanguageClick = (languageName: string) => {
     navigate(`/languages/${languageName}`);
   };
 
