@@ -56,6 +56,20 @@ function Languages() {
               {!imageErrors[language.id] && <div className="language-card-overlay"></div>}
               <div className="language-card-content">
                 <h3 style={{ color: !imageErrors[language.id] ? 'white' : '#4A5899' }}>{language.name}</h3>
+                <img
+                  src={`https://flagcdn.com/${language.countryCode?.toLowerCase()}.svg`}
+                  alt={`${language.name} Flag`}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: '0',
+                    width: '36px',
+                    height: '24px',
+                    borderRadius: '2px',
+                    objectFit: 'cover',
+                    transform: 'translateY(-50%)'
+                  }}
+                />
               </div>
             </div>
           ))}

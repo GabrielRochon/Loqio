@@ -6,6 +6,14 @@
 
 This full-stack web application serves as an educational project exploring modern software technologies, from backend microservices and databases to cloud deployment and DevOps practices.
 
+## Setup
+
+Before running the microservices locally, ensure your current IP address is allow-listed in the Azure Portal for the PostgreSQL database to avoid connection timeouts:
+
+1. Go to the Azure Portal and navigate to the `psql-languages-prod` PostgreSQL server resource.
+2. Select **Networking** from the left-hand menu.
+3. Under **Firewall rules**, click **Add current client IP address** to allow-list your IP.
+
 ## Running the Microservices
 
 To run all microservices simultaneously during development:

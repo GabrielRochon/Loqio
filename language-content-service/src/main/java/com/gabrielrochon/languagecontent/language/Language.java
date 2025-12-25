@@ -28,6 +28,9 @@ public class Language
 	// URL for the background image stored in Azure Blob Storage.
 	private String backgroundImageUrl;
 
+	// ISO 3166-1 alpha-2 country code (e.g., "CA", "US", "FR")
+	private String countryCode;
+
 	// Constructors
 	public Language() {}
 
@@ -73,6 +76,16 @@ public class Language
 		this.backgroundImageUrl = backgroundImageUrl;
 	}
 
+	public String getCountryCode()
+	{
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode)
+	{
+		this.countryCode = countryCode;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -80,6 +93,7 @@ public class Language
 				"id=" + id +
 				", name='" + name + '\'' +
 				", backgroundImageUrl='" + backgroundImageUrl + '\'' +
+				", countryCode='" + countryCode + '\'' +
 				'}';
 	}
 }
