@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import './App.css';
+import '../app/app.scss';
+
+interface ModuleData {
+  id: number;
+  name: string;
+  description: string;
+}
 
 function Modules() {
-  const { languageName } = useParams();
-  const navigate = useNavigate();
-  const [modules, setModules] = useState([]);
+  const { languageName } = useParams<string>();
+  const [modules, setModules] = useState<ModuleData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchModules();
-  }, [languageName]);
-
-  const fetchModules = async () => {
+  const fetchModules = useCallback(async () => {
     try {
       const modulesResponse = await fetch(`http://localhost:8082/languages/${languageName}/modules`);
       if (!modulesResponse.ok) {
@@ -24,14 +25,14 @@ function Modules() {
       setModules(modulesData);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
     }
-  };
+  }, [languageName]);
 
-  const handleBackToLanguage = () => {
-    navigate(`/languages/${languageName}`);
-  };
+  useEffect(() => {
+    fetchModules();
+  }, [fetchModules]);
 
   if (loading) return <div className="App-main"><p>Loading...</p></div>;
   if (error) return <div className="App-main">Error: {error}</div>;

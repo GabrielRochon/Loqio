@@ -4,11 +4,11 @@ import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import Languages from './Languages';
-import Language from './Language';
-import Modules from './Modules';
-import Sentences from './Sentences';
-import './App.css';
+import Languages from '../components/Languages';
+import Language from '../components/Language';
+import Modules from '../components/Modules';
+import Sentences from '../components/Sentences';
+import './app.scss';
 
 function App() {
   return (

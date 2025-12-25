@@ -49,18 +49,18 @@ This will start the React development server on http://localhost:3000/
 
 |   | Category | Technology Used | Microservice Requiring Creation | Feature |
 | - | -------- | --------------- | ------------------------------- | ------- |
-| ✅ | Backend (Microservice-Friendly) | Java / SpringBoot | - | Basic project skeleton |
-| ✅ | Unit Tests | JUnit | - | Basic endpoint tests |
-| ✅ | Relational DB | PostgreSQL | Language Content | Fetch a list of languages and their curriculum |
-| 🏗️ | UI | React, Azure Blob Storage | - | Navigate to a language course and display the modules / sentences per module, display background images |
-| ⬜ | Non-Relational DB | MongoDB | User Progress | Track the words learned and experience points of a user |
-| ⬜ | Rest API Documentation | Swagger | - | Document all microservices' API endpoints 
-| ⬜ | Caching | Redis | - | Reduce operation time to fetch the same language's curriculum many times |
-| ⬜ | Authentication | Spring Authorization Server (OAuth2) | Authentication | Keep user's progress |
-| ⬜ | Events / Pub-Sub | Kafka | - | Calculate newly acquired experience points after lesson completion |
-| ⬜ | Telemetry | OpenTelemetry | Analytics | Emit lesson completion metrics |
-| ⬜ | Monitoring | Grafana / Prometheus | - | Consume metrics and display them on graphs |
-| ⬜ | CI/CD | GitHub Actions | - | Run unit tests upon raising PRs |
-| ⬜ | Code Quality | SonarQube | - | Highlight possible code bugs and quality improvements upon running Merge Validation pipeline when raising PR
-| ⬜ | Deployment + Cloud | Kubernetes + Docker + Azure (AKS) | - | Running end-to-end tests + overseeing deployments |
-| ⬜ | AI Integration | Claude | - | Add an AI assistant to ask questions during the lesson
+| ✅ | Backend (Microservice-Friendly) | <ul><li>Java</li><li>SpringBoot</li></ul> | - | <ul><li>Basic project skeleton</li></ul> |
+| ✅ | Unit Tests | <ul><li>JUnit</li></ul> | - | <ul><li>Basic endpoint tests</li></ul> |
+| ✅ | Relational DB | <ul><li>PostgreSQL</li></ul> | Language Content | <ul><li>Fetch a list of languages</li><li>Fetch their curriculum</li></ul> |
+| 🏗️ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | - | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
+| ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
+| ⬜ | Rest API Documentation | <ul><li>Swagger</li></ul> | - | <ul><li>Document all microservices' API endpoints</li></ul>
+| ⬜ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
+| ⬜ | Authentication | <ul><li>Spring Authorization Server (OAuth2)</li></ul> | Authentication | <ul><li>Keep user's progress</li></ul> |
+| ⬜ | Events / Pub-Sub | <ul><li>Kafka</li></ul> | - | <ul><li>Calculate newly acquired experience points after lesson completion</li></ul> |
+| ⬜ | Telemetry | <ul><li>OpenTelemetry</li></ul> | Analytics | <ul><li>Emit lesson completion metrics</li></ul> |
+| ⬜ | Monitoring | <ul><li>Grafana</li><li>Prometheus</li></ul> | - | <ul><li>Consume metrics</li><li>Display them on graphs</li></ul> |
+| ⬜ | CI/CD | <ul><li>GitHub Actions</li></ul> | - | <ul><li>Run unit tests upon raising PRs</li></ul> |
+| ⬜ | Code Quality | <ul><li>SonarQube</li></ul> | - | <ul><li>Highlight possible code bugs</li><li>Highlight quality improvements upon running Merge Validation pipeline when raising PR</li></ul>
+| ⬜ | Deployment + Cloud | <ul><li>Kubernetes</li><li>Docker</li><li>Azure (AKS)</li></ul> | - | <ul><li>Running end-to-end tests</li><li>Overseeing deployments</li></ul> |
+| ⬜ | AI Integration | <ul><li>Claude</li></ul> | - | <ul><li>Add an AI assistant to ask questions during the lesson</li></ul>

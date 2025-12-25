@@ -1,21 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './App.css';
+import '../app/app.scss';
+
+interface LanguageData {
+  id: number;
+  name: string;
+}
+
+interface ModuleData {
+  id: number;
+  name: string;
+  language?: LanguageData;
+}
+
+interface SentenceData {
+  id: number;
+  learningText: string;
+  translationText: string;
+  speaker: number;
+  position?: number;
+  module?: ModuleData;
+}
 
 function Sentences() {
-  const { moduleId } = useParams();
+  const { moduleId } = useParams<string>();
   const navigate = useNavigate();
-  const [sentences, setSentences] = useState([]);
-  const [module, setModule] = useState(null);
-  const [language, setLanguage] = useState(null);
+  const [sentences, setSentences] = useState<SentenceData[]>([]);
+  const [module, setModule] = useState<ModuleData | null>(null);
+  const [language, setLanguage] = useState<LanguageData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchSentences();
-  }, [moduleId]);
-
-  const fetchSentences = async () => {
+  const fetchSentences = useCallback(async () => {
     try {
       // Fetch sentences for this module
       const sentencesResponse = await fetch(`http://localhost:8082/modules/${moduleId}/sentences`);
@@ -25,7 +41,7 @@ function Sentences() {
       const sentencesData = await sentencesResponse.json();
 
       // Sort sentences by position
-      sentencesData.sort((a, b) => (a.position || 0) - (b.position || 0));
+      sentencesData.sort((a: SentenceData, b: SentenceData) => (a.position || 0) - (b.position || 0));
       setSentences(sentencesData);
 
       // If we have sentences, try to get module and language info
@@ -38,10 +54,14 @@ function Sentences() {
 
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
     }
-  };
+  }, [moduleId]);
+
+  useEffect(() => {
+    fetchSentences();
+  }, [fetchSentences]);
 
   const handleBackToModules = () => {
     navigate(-1); // Go back to previous page

@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './App.css';
+import '../app/app.scss';
+
+interface LanguageData {
+  name: string;
+  countryCode?: string;
+  languagePresentation?: string;
+}
 
 function Language() {
-  const { languageName } = useParams();
+  const { languageName } = useParams<string>();
   const navigate = useNavigate();
-  const [language, setLanguage] = useState(null);
+  const [language, setLanguage] = useState<LanguageData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
 
-  useEffect(() => {
-    fetchLanguage();
-  }, [languageName]);
-
-  useEffect(() => {
-    if (language) {
-      const img = new Image();
-      img.onload = () => setImageError(false);
-      img.onerror = () => setImageError(true);
-      img.src = `http://localhost:8082/images/${language.name}/background.jpg`;
-    }
-  }, [language]);
-
-  const fetchLanguage = async () => {
+  const fetchLanguage = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:8082/languages/${languageName}`);
       if (!response.ok) {
@@ -33,10 +26,23 @@ function Language() {
       setLanguage(data);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
     }
-  };
+  }, [languageName]);
+
+  useEffect(() => {
+    fetchLanguage();
+  }, [fetchLanguage]);
+
+  useEffect(() => {
+    if (language) {
+      const img = new Image();
+      img.onload = () => setImageError(false);
+      img.onerror = () => setImageError(true);
+      img.src = `http://localhost:8082/images/${language.name}/background.jpg`;
+    }
+  }, [language]);
 
   const handleBackToLanguages = () => {
     navigate('/');
@@ -77,7 +83,7 @@ function Language() {
           />
         </div>
         <p style={{ textAlign: 'left', color: !imageError ? 'white' : '#4A5899', alignSelf: 'flex-start', fontSize: '1rem', margin: '0 0 20px 0', maxWidth: '600px', overflowWrap: 'break-word' }}>{language && language.languagePresentation ? language.languagePresentation : 'No language presentation available.'}</p>
-        <button onClick={handleBeginJourney} style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'white' : '#618B4A', color: !imageError ? '#4A5899' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
+        <button onClick={handleBeginJourney} className="begin-journey-button" style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'white' : '#618B4A', color: !imageError ? '#4A5899' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
       </div>
     </div>
   );
