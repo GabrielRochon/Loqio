@@ -87,7 +87,7 @@ function Modules() {
             }}
           />
         </div>
-        <p style={{ textAlign: 'left', color: !imageError ? 'white' : '#4A5899', alignSelf: 'flex-start', fontSize: '1rem', margin: '0 0 20px 0', maxWidth: '600px', overflowWrap: 'break-word' }}>This is a rich language spoken by wonderful people. It has been around for 40 quadrillion years and continue to evolve as people adapt and make more grilled cheese.</p>
+        <p style={{ textAlign: 'left', color: !imageError ? 'white' : '#4A5899', alignSelf: 'flex-start', fontSize: '1rem', margin: '0 0 20px 0', maxWidth: '600px', overflowWrap: 'break-word' }}>{language ? language.languagePresentation : 'Loading presentation...'}</p>
         <button style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'rgba(255,255,255,0.2)' : '#618B4A', color: !imageError ? 'white' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
         {modules.length === 0 ? (
           <p style={{ color: !imageError ? 'white' : '#4A5899' }}>No modules available for this language at the moment.</p>

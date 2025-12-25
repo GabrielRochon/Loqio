@@ -31,6 +31,9 @@ public class Language
 	// ISO 3166-1 alpha-2 country code (e.g., "CA", "US", "FR")
 	private String countryCode;
 
+	// Presentation description of the language
+	private String languagePresentation;
+
 	// Constructors
 	public Language() {}
 
@@ -46,6 +49,17 @@ public class Language
 	}
 
 	// Getters and Setters
+	public String getLanguagePresentation()
+	{
+		return languagePresentation;
+	}
+
+	public void setLanguagePresentation(String languagePresentation)
+	{
+		this.languagePresentation = languagePresentation;
+	}
+
+	// Other Getters and Setters
 	public Long getId()
 	{
 		return id;
@@ -94,6 +108,7 @@ public class Language
 				", name='" + name + '\'' +
 				", backgroundImageUrl='" + backgroundImageUrl + '\'' +
 				", countryCode='" + countryCode + '\'' +
+				", languagePresentation='" + languagePresentation + '\'' +
 				'}';
 	}
 }
