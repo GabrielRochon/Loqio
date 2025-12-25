@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as Icons from '@mui/icons-material';
 import '../app/app.scss';
 
@@ -20,6 +20,7 @@ interface LanguageData {
 
 function Modules() {
   const { languageName } = useParams<string>();
+  const navigate = useNavigate();
   const [modules, setModules] = useState<ModuleData[]>([]);
   const [language, setLanguage] = useState<LanguageData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -92,7 +93,11 @@ function Modules() {
                   const IconComponent = getIconComponent(module.materialIconName || 'MenuBook');
                   return (
                     <React.Fragment key={module.id}>
-                      <div className="module-text">
+                      <div
+                        className="module-text"
+                        onClick={() => navigate(`/languages/${languageName}/modules/${encodeURIComponent(module.name)}`)}
+                        style={{ cursor: 'pointer' }}
+                      >
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                           <IconComponent style={{ color: '#4C5C6D', fontSize: '1.5rem', marginTop: '4px' }} />
                           <div>

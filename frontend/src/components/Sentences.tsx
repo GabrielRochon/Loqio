@@ -23,7 +23,7 @@ interface SentenceData {
 }
 
 function Sentences() {
-  const { moduleId } = useParams<string>();
+  const { languageName, moduleName } = useParams<{ languageName: string; moduleName: string }>();
   const navigate = useNavigate();
   const [sentences, setSentences] = useState<SentenceData[]>([]);
   const [module, setModule] = useState<ModuleData | null>(null);
@@ -31,10 +31,23 @@ function Sentences() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchSentences = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     try {
-      // Fetch sentences for this module
-      const sentencesResponse = await fetch(`http://localhost:8082/modules/${moduleId}/sentences`);
+      // First fetch the modules for the language to find the module by name
+      const modulesResponse = await fetch(`http://localhost:8082/languages/${languageName}/modules`);
+      if (!modulesResponse.ok) {
+        throw new Error('Failed to fetch modules');
+      }
+      const modulesData: ModuleData[] = await modulesResponse.json();
+      const foundModule = modulesData.find(m => m.name === decodeURIComponent(moduleName || ''));
+      if (!foundModule) {
+        throw new Error('Module not found');
+      }
+      setModule(foundModule);
+      setLanguage({ id: foundModule.language?.id || 0, name: languageName || '' });
+
+      // Now fetch sentences for this module
+      const sentencesResponse = await fetch(`http://localhost:8082/modules/${foundModule.id}/sentences`);
       if (!sentencesResponse.ok) {
         throw new Error('Failed to fetch sentences');
       }
@@ -44,24 +57,16 @@ function Sentences() {
       sentencesData.sort((a: SentenceData, b: SentenceData) => (a.position || 0) - (b.position || 0));
       setSentences(sentencesData);
 
-      // If we have sentences, try to get module and language info
-      if (sentencesData.length > 0 && sentencesData[0].module) {
-        setModule(sentencesData[0].module);
-        if (sentencesData[0].module.language) {
-          setLanguage(sentencesData[0].module.language);
-        }
-      }
-
       setLoading(false);
     } catch (err) {
       setError((err as Error).message);
       setLoading(false);
     }
-  }, [moduleId]);
+  }, [languageName, moduleName]);
 
   useEffect(() => {
-    fetchSentences();
-  }, [fetchSentences]);
+    fetchData();
+  }, [fetchData]);
 
   const handleBackToModules = () => {
     navigate(-1); // Go back to previous page
@@ -72,8 +77,8 @@ function Sentences() {
 
   return (
     <div className="App-main">
-      <button onClick={handleBackToModules} className="back-button">
-        ← Back
+      <button onClick={handleBackToModules} style={{ backgroundColor: 'transparent', color: '#4A5899', border: '2px solid #4A5899', borderRadius: '5px', padding: '10px 20px', cursor: 'pointer', fontSize: '1rem', marginBottom: '20px' }}>
+        ← Back to Modules
       </button>
       <h1>{language ? language.name : 'Language'} - {module ? module.name : 'Module'}</h1>
       <div className="sentences-container">

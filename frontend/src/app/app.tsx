@@ -1,4 +1,4 @@
-import React from 'react';
+eimport React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -35,7 +35,7 @@ function App() {
           <Route path="/" element={<Languages />} />
           <Route path="/languages/:languageName" element={<Language />} />
           <Route path="/languages/:languageName/modules" element={<Modules />} />
-          <Route path="/module/:moduleId/sentences" element={<Sentences />} />
+          <Route path="/languages/:languageName/modules/:moduleName" element={<Sentences />} />
         </Routes>
       </div>
     </Router>
