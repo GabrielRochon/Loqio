@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './App.css';
 
 function Modules() {
-  const { languageId } = useParams();
+  const { languageName } = useParams();
   const navigate = useNavigate();
   const [modules, setModules] = useState([]);
   const [language, setLanguage] = useState(null);
@@ -13,7 +13,7 @@ function Modules() {
 
   useEffect(() => {
     fetchModules();
-  }, [languageId]);
+  }, [languageName]);
 
   useEffect(() => {
     if (language) {
@@ -26,17 +26,16 @@ function Modules() {
 
   const fetchModules = async () => {
     try {
-      // First fetch the language details
-      const languagesResponse = await fetch('http://localhost:8082/languages');
-      if (!languagesResponse.ok) {
-        throw new Error('Failed to fetch languages');
+      // Fetch the language details
+      const languageResponse = await fetch(`http://localhost:8082/languages/${languageName}`);
+      if (!languageResponse.ok) {
+        throw new Error('Failed to fetch language');
       }
-      const languages = await languagesResponse.json();
-      const currentLanguage = languages.find(lang => lang.id.toString() === languageId);
-      setLanguage(currentLanguage);
+      const languageData = await languageResponse.json();
+      setLanguage(languageData);
 
       // Then fetch modules for this language
-      const modulesResponse = await fetch(`http://localhost:8082/languages/${languageId}`);
+      const modulesResponse = await fetch(`http://localhost:8082/languages/${languageName}/modules`);
       if (!modulesResponse.ok) {
         throw new Error('Failed to fetch modules');
       }
@@ -88,24 +87,7 @@ function Modules() {
           />
         </div>
         <p style={{ textAlign: 'left', color: !imageError ? 'white' : '#4A5899', alignSelf: 'flex-start', fontSize: '1rem', margin: '0 0 20px 0', maxWidth: '600px', overflowWrap: 'break-word' }}>{language ? language.languagePresentation : 'Loading presentation...'}</p>
-        <button style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'rgba(255,255,255,0.2)' : '#618B4A', color: !imageError ? 'white' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
-        {modules.length === 0 ? (
-          <p style={{ color: !imageError ? 'white' : '#4A5899' }}>No modules available for this language at the moment.</p>
-        ) : (
-          <div className="modules-list">
-            {modules.map(module => (
-              <div
-                key={module.id}
-                className="module-card clickable"
-                onClick={() => handleModuleClick(module.id)}
-              >
-                <h3>{module.name}</h3>
-                <p>ID: {module.id}</p>
-                <p className="click-hint">Click to view sentences</p>
-              </div>
-            ))}
-          </div>
-        )}
+        <button style={{ alignSelf: 'flex-start', marginBottom: '20px', padding: '10px 20px', backgroundColor: !imageError ? 'white' : '#618B4A', color: !imageError ? '#4A5899' : '#F6F0ED', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2rem' }}>Begin your journey</button>
       </div>
     </div>
   );

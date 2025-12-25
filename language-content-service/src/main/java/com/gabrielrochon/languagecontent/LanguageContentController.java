@@ -99,11 +99,18 @@ public class LanguageContentController
 		languageService.deleteLanguage(id);
 	}
 
-	// Modules endpoints
-	@GetMapping("/languages/{id}")
-	public List<Module> getModulesByLanguage(@PathVariable Long id)
+	// Language details endpoint
+	@GetMapping("/languages/{name}")
+	public Language getLanguageByName(@PathVariable String name)
 	{
-		return moduleService.getModulesByLanguageId(id);
+		return languageService.getLanguageByName(name);
+	}
+
+	// Modules endpoints
+	@GetMapping("/languages/{name}/modules")
+	public List<Module> getModulesByLanguage(@PathVariable String name)
+	{
+		return moduleService.getModulesByLanguageName(name);
 	}
 
 	@PostMapping("/modules")

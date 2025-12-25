@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LanguageRepository extends JpaRepository<Language, Long>
 {
-	// Custom query methods can be added here if needed
+	Language findByName(String name);
 }

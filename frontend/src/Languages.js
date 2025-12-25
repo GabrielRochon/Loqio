@@ -28,8 +28,8 @@ function Languages() {
     }
   };
 
-  const handleLanguageClick = (languageId) => {
-    navigate(`/languages/${languageId}`);
+  const handleLanguageClick = (languageName) => {
+    navigate(`/languages/${languageName}`);
   };
 
   if (error) return <div className="App-main">Error: {error}</div>;
@@ -45,7 +45,7 @@ function Languages() {
             <div
               key={language.id}
               className="language-card clickable"
-              onClick={() => handleLanguageClick(language.id)}
+              onClick={() => handleLanguageClick(language.name)}
               style={{
                 backgroundImage: !imageErrors[language.id] ? `url(http://localhost:8082/images/${language.name}/background.jpg)` : undefined,
                 backgroundSize: 'cover',
