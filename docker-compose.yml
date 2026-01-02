@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - hello-world-service
+      - language-content-service
+    networks:
+      - app-network
+
+  hello-world-service:
+    build:
+      context: ./hello-world-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+
+  language-content-service:
+    build:
+      context: .
+      dockerfile: ./language-content-service/Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      # Azure PostgreSQL configuration (set these environment variables)
+      - VOCABULARY_DB_HOST=${VOCABULARY_DB_HOST:-your-server-name.postgres.database.azure.com}
+      - VOCABULARY_DB_PORT=${VOCABULARY_DB_PORT:-5432}
+      - VOCABULARY_DB_NAME=${VOCABULARY_DB_NAME:-your-database-name}
+      - VOCABULARY_DB_USERNAME=${VOCABULARY_DB_USERNAME:-your-username}
+      - VOCABULARY_DB_PASSWORD=${VOCABULARY_DB_PASSWORD:-your-password}
+      # Azure storage configuration
+      - AZURE_STORAGE_ACCOUNT_NAME=${AZURE_STORAGE_ACCOUNT_NAME:-dummy}
+      - AZURE_STORAGE_ACCOUNT_KEY=${AZURE_STORAGE_ACCOUNT_KEY:-dummy}
+      - AZURE_STORAGE_CONTAINER_NAME=${AZURE_STORAGE_CONTAINER_NAME:-dummy}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
