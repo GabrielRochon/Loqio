@@ -2,7 +2,7 @@
 
 *Etymology check: Loqio comes from Latin loqui ("to speak"). It's a witty word play for which I have no credit for (thanks ChatGPT.)*
 
-**Loqio** is a comprehensive AI-powered language learning platform built with a microservice architecture. It features personalized learning paths tailored to individual progress, an integrated AI assistant for real-time guidance, and gamification elements to make language acquisition engaging and effective.
+This is purely a learning project. **Loqio** is a comprehensive AI-powered language learning platform built with a microservice architecture. It features personalized learning paths tailored to individual progress, an integrated AI assistant for real-time guidance, and gamification elements to make language acquisition engaging and effective.
 
 This full-stack web application serves as an educational project exploring modern software technologies, from backend microservices and databases to cloud deployment and DevOps practices.
 
