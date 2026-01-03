@@ -1,4 +1,6 @@
-# Build stage
+# ================================
+# BUILD STAGE
+# ================================
 FROM gradle:8-jdk21-alpine AS build
 
 WORKDIR /app
@@ -15,7 +17,9 @@ COPY src ./src
 # Build the application
 RUN gradle build --no-daemon
 
-# Runtime stage
+# ================================
+# RUNTIME STAGE
+# ================================
 FROM eclipse-temurin:21-jre
 
 WORKDIR /app
