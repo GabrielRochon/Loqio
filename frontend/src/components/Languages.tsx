@@ -63,8 +63,22 @@ function Languages() {
                 } : {}}
               >
                 {!language.backgroundImageUrl && <div className="language-card-overlay"></div>}
+                {language.backgroundImageUrl && (
+                  <div
+                    className="language-card-text-overlay"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '60px',
+                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, transparent 100%)',
+                      zIndex: 1
+                    }}
+                  />
+                )}
                 <div className="language-card-content">
-                  <h3 style={{ color: 'white' }}>{language.name}</h3>
+                  <h3 style={{ color: 'white', position: 'relative', zIndex: 2 }}>{language.name}</h3>
                   <img
                     src={`https://flagcdn.com/${language.countryCode?.toLowerCase()}.svg`}
                     alt={`${language.name} Flag`}
@@ -76,7 +90,8 @@ function Languages() {
                       height: '24px',
                       borderRadius: '2px',
                       objectFit: 'cover',
-                      transform: 'translateY(-50%)'
+                      transform: 'translateY(-50%)',
+                      zIndex: 2
                     }}
                   />
                 </div>
