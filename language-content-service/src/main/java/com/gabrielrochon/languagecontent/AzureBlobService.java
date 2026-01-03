@@ -5,9 +5,11 @@ import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Base64;
 
 /**
  * Service for interacting with Azure Blob Storage.
@@ -45,14 +47,40 @@ public class AzureBlobService
 	{
 		try
 		{
+			// Get cached Base64 string and decode to bytes
+			String base64Data = downloadBlobAsBase64(blobName);
+			byte[] data = Base64.getDecoder().decode(base64Data);
+			System.out.println("Decoded cached blob " + blobName + " from Base64, size: " + data.length + " bytes");
+			return data;
+		}
+		catch (Exception e)
+		{
+			System.err.println("Failed to decode cached blob: " + blobName + ", error: " + e.getMessage());
+			throw new RuntimeException("Failed to decode cached blob: " + blobName, e);
+		}
+	}
+
+	/**
+	 * Downloads a blob and caches it as Base64 string for JSON serialization compatibility.
+	 *
+	 * @param blobName the name of the blob to download
+	 * @return Base64 encoded string of the blob content
+	 * @throws RuntimeException if the blob cannot be downloaded
+	 */
+	@Cacheable(value = "blobs", key = "#blobName")
+	private String downloadBlobAsBase64(String blobName)
+	{
+		try
+		{
 			System.out.println("Attempting to download blob: " + blobName);
 			BlobClient blobClient = containerClient.getBlobClient(blobName);
 			System.out.println("Blob URL: " + blobClient.getBlobUrl());
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			blobClient.downloadStream(outputStream);
 			byte[] data = outputStream.toByteArray();
-			System.out.println("Downloaded blob " + blobName + " successfully, size: " + data.length + " bytes");
-			return data;
+			String base64Data = Base64.getEncoder().encodeToString(data);
+			System.out.println("Downloaded and cached blob " + blobName + " as Base64, original size: " + data.length + " bytes");
+			return base64Data;
 		}
 		catch (Exception e)
 		{
@@ -67,6 +95,7 @@ public class AzureBlobService
 	 * @param blobName the name of the blob
 	 * @return true if the blob exists, false otherwise
 	 */
+	@Cacheable(value = "blob-existence", key = "#blobName")
 	public boolean blobExists(String blobName)
 	{
 		try

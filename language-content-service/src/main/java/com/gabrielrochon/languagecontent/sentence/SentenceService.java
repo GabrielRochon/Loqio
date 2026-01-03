@@ -1,6 +1,8 @@
 package com.gabrielrochon.languagecontent.sentence;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class SentenceService
 	 * @param moduleId The ID of the module
 	 * @return List of Sentence entities for the given module
 	 */
+	@Cacheable(value = "sentences", key = "#moduleId")
 	public List<Sentence> getSentencesByModuleId(Long moduleId)
 	{
 		return sentenceRepository.findByModuleId(moduleId);
@@ -35,6 +38,7 @@ public class SentenceService
 	 * @param languageId The ID of the language
 	 * @return List of Sentence entities for the given language
 	 */
+	@Cacheable(value = "sentences", key = "#languageId")
 	public List<Sentence> getSentencesByLanguageId(Long languageId)
 	{
 		return sentenceRepository.findByModuleLanguageId(languageId);
@@ -46,6 +50,7 @@ public class SentenceService
 	 * @param sentence the sentence to add
 	 * @return the saved sentence entity
 	 */
+	@CacheEvict(value = "sentences", allEntries = true)
 	public Sentence addSentence(Sentence sentence)
 	{
 		return sentenceRepository.save(sentence);
@@ -56,6 +61,7 @@ public class SentenceService
 	 *
 	 * @param id the ID of the sentence to delete
 	 */
+	@CacheEvict(value = "sentences", allEntries = true)
 	public void deleteSentence(Long id)
 	{
 		sentenceRepository.deleteById(id);

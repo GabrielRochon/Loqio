@@ -1,6 +1,8 @@
 package com.gabrielrochon.languagecontent.language;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class LanguageService
 	 *
 	 * @return List of all Language entities
 	 */
+	@Cacheable("languages")
 	public List<Language> getAllLanguages()
 	{
 		return languageRepository.findAll();
@@ -33,6 +36,7 @@ public class LanguageService
 	 * @param language the language to add
 	 * @return the saved language entity
 	 */
+	@CacheEvict(value = "languages", allEntries = true)
 	public Language addLanguage(Language language)
 	{
 		return languageRepository.save(language);
@@ -44,6 +48,7 @@ public class LanguageService
 	 * @param name the name of the language
 	 * @return the Language entity
 	 */
+	@Cacheable(value = "languages", key = "#name")
 	public Language getLanguageByName(String name)
 	{
 		return languageRepository.findByName(name);
@@ -56,6 +61,7 @@ public class LanguageService
 	 * @param language the updated language data
 	 * @return the updated language entity
 	 */
+	@CacheEvict(value = "languages", allEntries = true)
 	public Language updateLanguage(Long id, Language language)
 	{
 		Language existingLanguage = languageRepository.findById(id).orElseThrow(() -> new RuntimeException("Language not found"));
@@ -71,6 +77,7 @@ public class LanguageService
 	 *
 	 * @param id the ID of the language to delete
 	 */
+	@CacheEvict(value = "languages", allEntries = true)
 	public void deleteLanguage(Long id)
 	{
 		languageRepository.deleteById(id);

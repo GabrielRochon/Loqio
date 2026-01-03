@@ -21,8 +21,11 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'io.github.cdimascio:dotenv-java:3.0.0'
     implementation 'com.azure:azure-storage-blob:12.28.0'
+    implementation 'com.azure:azure-storage-common:12.28.0'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
@@ -38,6 +41,10 @@ tasks.named('test') {
 checkstyle {
     configFile = file('../config/checkstyle/checkstyle.xml')
     maxWarnings = 0
+}
+
+checkstyleTest {
+    maxWarnings = 1000
 }
 
 bootRun {

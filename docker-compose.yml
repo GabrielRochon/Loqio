@@ -1,0 +1,63 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - hello-world-service
+      - language-content-service
+    networks:
+      - app-network
+
+  hello-world-service:
+    build:
+      context: ./hello-world-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+
+  language-content-service:
+    build:
+      context: .
+      dockerfile: ./language-content-service/Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      # Azure PostgreSQL configuration (set these environment variables)
+      - VOCABULARY_DB_HOST=${VOCABULARY_DB_HOST}
+      - VOCABULARY_DB_PORT=${VOCABULARY_DB_PORT}
+      - VOCABULARY_DB_NAME=${VOCABULARY_DB_NAME}
+      - VOCABULARY_DB_USERNAME=${VOCABULARY_DB_USERNAME}
+      - VOCABULARY_DB_PASSWORD=${VOCABULARY_DB_PASSWORD}
+      # Azure storage configuration
+      - AZURE_STORAGE_ACCOUNT_NAME=${AZURE_STORAGE_ACCOUNT_NAME}
+      - AZURE_STORAGE_ACCOUNT_KEY=${AZURE_STORAGE_ACCOUNT_KEY}
+      - AZURE_STORAGE_CONTAINER_NAME=${AZURE_STORAGE_CONTAINER_NAME}
+      # Redis configuration
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+volumes:
+  redis_data:
+
+networks:
+  app-network:
+    driver: bridge
