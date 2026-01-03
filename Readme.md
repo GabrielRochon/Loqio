@@ -43,8 +43,8 @@ Before running the microservices locally, ensure your current IP address is allo
 | ✅ | Unit Tests | <ul><li>JUnit</li></ul> | - | <ul><li>Basic endpoint tests</li></ul> |
 | ✅ | Relational DB | <ul><li>PostgreSQL</li></ul> | Language Content | <ul><li>Fetch a list of languages</li><li>Fetch their curriculum</li></ul> |
 | ✅ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | Frontend | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
-| 🏗️ | Containerization | <ul><li>Docker</li></ul> | - | <ul><li>Launch the web app in one command</li><li>Prepare for Kubernetes later</li></ul> |
-| 🏗️ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
+| ✅ | Containerization | <ul><li>Docker</li></ul> | - | <ul><li>Launch the web app in one command</li><li>Prepare for Kubernetes later</li></ul> |
+| ✅ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
 | ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
 | ⬜ | Authentication | <ul><li>Spring Authorization Server (OAuth2)</li></ul> | Authentication | <ul><li>Keep user's progress</li></ul> |
 | ⬜ | Events / Pub-Sub | <ul><li>Kafka</li></ul> | - | <ul><li>Calculate newly acquired experience points after lesson completion</li></ul> |
