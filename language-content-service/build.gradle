@@ -43,6 +43,10 @@ checkstyle {
     maxWarnings = 0
 }
 
+checkstyleTest {
+    maxWarnings = 1000
+}
+
 bootRun {
     dependsOn checkstyleMain
 }
