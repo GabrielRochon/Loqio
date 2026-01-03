@@ -43,3 +43,31 @@ Interactions:
 This separation ensures clean architecture: the controller manages request/response handling, services encapsulate business logic, and models represent the data structure and persistence.
 
 ![Backend Endpoint Logic](./documentation-assets/BackendEndpointLogic.png)
+
+## Redis Caching
+
+**Redis** is an in-memory data store used as a high-performance cache. It stores data in RAM for microsecond access speeds, dramatically faster than disk-based databases.
+
+**@Cacheable** marks methods as cacheable. On first call, the result is computed and stored. Subsequent calls return the cached result:
+```java
+@Cacheable("languages")
+public List<Language> getAllLanguages() {
+    return languageRepository.findAll(); // Executes only on cache miss
+}
+```
+
+**@CacheEvict** clears cache entries to maintain data consistency after modifications:
+```java
+@CacheEvict(value = "languages", allEntries = true)
+public Language addLanguage(Language language) {
+    return languageRepository.save(language);
+}
+```
+
+**Implementation**: Read operations check cache first, write operations clear caches. Separate caches for languages, modules, sentences, and Azure Blob Storage assets. All @Cacheable and @CacheEvict annotations are active and working correctly.
+
+**Redis Persistence**: Docker volume (`redis_data:/data`) + AOF (`--appendonly yes`) ensures cached data survives container restarts and rebuilds.
+
+**Blob Caching**: Uses Base64 encoding since byte[] arrays aren't JSON serializable. Cache stores encoded strings; API returns decoded bytes for compatibility.
+
+Configured via `spring.cache.type=redis` and environment variables.

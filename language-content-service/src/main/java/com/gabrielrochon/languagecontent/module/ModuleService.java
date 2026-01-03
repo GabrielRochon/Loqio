@@ -3,6 +3,8 @@ package com.gabrielrochon.languagecontent.module;
 import com.gabrielrochon.languagecontent.language.Language;
 import com.gabrielrochon.languagecontent.language.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class ModuleService
 	 * @param languageId The ID of the language
 	 * @return List of Module entities for the given language
 	 */
+	@Cacheable(value = "modules", key = "#languageId")
 	public List<Module> getModulesByLanguageId(Long languageId)
 	{
 		return moduleRepository.findByLanguageId(languageId);
@@ -39,10 +42,11 @@ public class ModuleService
 	 * @param languageName The name of the language
 	 * @return List of Module entities for the given language
 	 */
+	@Cacheable(value = "modules", key = "#languageName")
 	public List<Module> getModulesByLanguageName(String languageName)
 	{
 		Language language = languageService.getLanguageByName(languageName);
-		if (language == null) 
+		if (language == null)
 		{
 			return List.of(); // Return empty list if language not found
 		}
@@ -55,6 +59,7 @@ public class ModuleService
 	 * @param module the module to add
 	 * @return the saved module entity
 	 */
+	@CacheEvict(value = "modules", allEntries = true)
 	public Module addModule(Module module)
 	{
 		return moduleRepository.save(module);
@@ -65,6 +70,7 @@ public class ModuleService
 	 *
 	 * @param id the ID of the module to delete
 	 */
+	@CacheEvict(value = "modules", allEntries = true)
 	public void deleteModule(Long id)
 	{
 		moduleRepository.deleteById(id);
