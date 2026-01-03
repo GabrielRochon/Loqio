@@ -2,9 +2,13 @@
 
 *Etymology check: Loqio comes from Latin loqui ("to speak"). It's a witty word play for which I have no credit for (thanks ChatGPT.)*
 
-This is purely a learning project. **Loqio** is a comprehensive AI-powered language learning platform built with a microservice architecture. It features personalized learning paths tailored to individual progress, an integrated AI assistant for real-time guidance, and gamification elements to make language acquisition engaging and effective.
+**Loqio** is a comprehensive AI-powered language learning platform built with a microservice architecture. It features personalized learning paths tailored to individual progress, an integrated AI assistant for real-time guidance, and gamification elements to make language acquisition engaging and effective.
 
-This full-stack web application serves as an educational project exploring modern software technologies, from backend microservices and databases to cloud deployment and DevOps practices.
+This full-stack web application serves as an **educational project** exploring modern software technologies, from backend microservices and databases to cloud deployment and DevOps practices.
+
+![](./documentation-assets/Loqio%20Screenshot%201.png)
+
+![](./documentation-assets/Loqio%20Screenshot%202.png)
 
 ## Setup
 
@@ -45,9 +49,9 @@ Before running the microservices locally, ensure your current IP address is allo
 | ✅ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | Frontend | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
 | ✅ | Containerization | <ul><li>Docker</li></ul> | - | <ul><li>Launch the web app in one command</li><li>Prepare for Kubernetes later</li></ul> |
 | ✅ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
-| ⬜ | Virtual network | <ul><li>Azure Vnet</li></ul> | - | <ul><li>Remove the need to manually allow-list every IP that should have access to the PostgreSQL database</li></ul> |
 | ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
 | ⬜ | Authentication | <ul><li>Spring Authorization Server (OAuth2)</li></ul> | Authentication | <ul><li>Keep user's progress</li></ul> |
+| ⬜ | Authorization | <ul><li>Azure Entra Authentication</li></ul> | - | <ul><li>Remove the need to manually allow-list every IP that should have access to the PostgreSQL database</li></ul> |
 | ⬜ | Events / Pub-Sub | <ul><li>Kafka</li></ul> | - | <ul><li>Calculate newly acquired experience points after lesson completion</li></ul> |
 | ⬜ | CI/CD | <ul><li>GitHub Actions</li></ul> | - | <ul><li>Run unit tests upon raising PRs</li></ul> |
 | ⬜ | Deployment + Cloud | <ul><li>Kubernetes</li><li>Azure (AKS)</li></ul> | - | <ul><li>Running end-to-end tests</li><li>Overseeing deployments</li></ul> |
