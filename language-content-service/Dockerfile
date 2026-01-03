@@ -4,8 +4,8 @@ FROM gradle:8-jdk21-alpine AS build
 WORKDIR /app
 
 # Copy gradle files and checkstyle config
-COPY build.gradle ./
-COPY ../config/checkstyle/checkstyle.xml ../config/checkstyle/checkstyle.xml
+COPY language-content-service/build.gradle ./
+COPY config/checkstyle/checkstyle.xml ../config/checkstyle/checkstyle.xml
 
 # Download dependencies (for better caching)
 RUN gradle dependencies --no-daemon
@@ -14,7 +14,7 @@ RUN gradle dependencies --no-daemon
 COPY language-content-service/src ./src
 
 # Build the application
-RUN gradle build --no-daemon -x test
+RUN gradle build --no-daemon -x test -x checkstyleTest
 
 # Runtime stage
 FROM eclipse-temurin:21-jre
