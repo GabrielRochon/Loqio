@@ -8,6 +8,14 @@ This full-stack web application serves as an educational project exploring moder
 
 ## Setup
 
+### Prerequisites
+
+- **Docker** must be installed (for running microservices in containers)
+- **Node.js and npm** must be installed (for frontend development if not using Docker)
+- **Java 21** and **Gradle** must be installed (for backend development if not using Docker)
+
+### Database Configuration
+
 Before running the microservices locally, ensure your current IP address is allow-listed in the Azure Portal for the PostgreSQL database to avoid connection timeouts:
 
 1. Go to the Azure Portal and navigate to the `psql-languages-prod` PostgreSQL server resource.
@@ -16,34 +24,16 @@ Before running the microservices locally, ensure your current IP address is allo
 
 ## Running the Microservices
 
-To run all microservices simultaneously during development:
+| Use Case | Docker Command | Description |
+|----------|----------------|-------------|
+| Bring up all containers | `docker compose up` | Starts all microservices and frontend simultaneously |
+| Rebuild all services | `docker compose up --build` | Rebuilds all Docker images and restarts containers after code changes |
+| Rebuild single service | `docker compose up --build <service-name>` | Rebuilds and restarts only the specified service (e.g., `language-content-service`, `hello-world-service`, `frontend`) |
 
-```bash
-.\gradlew --parallel :hello-world-service:bootRun :language-content-service:bootRun
-```
-
-This will start:
-- **Hello World Service** on http://localhost:8081/
-- **Language Content Service** on http://localhost:8082/
-
-To run individual services:
-- Hello World: `.\gradlew :hello-world-service:bootRun`
-- Language Content: `.\gradlew :language-content-service:bootRun`
-
-## Running the Frontend
-
-To run the React frontend application:
-
-```bash
-cd frontend
-npm start
-```
-
-This will start the React development server on http://localhost:3000/
-
-**Prerequisites:**
-- Node.js and npm must be installed
-- Backend services must be running (see above)
+**Service Ports:**
+- Frontend: http://localhost:3000/
+- Hello World Service: http://localhost:8081/
+- Language Content Service: http://localhost:8082/
 
 ## Learning Checklist
 
@@ -52,13 +42,14 @@ This will start the React development server on http://localhost:3000/
 | ✅ | Backend (Microservice-Friendly) | <ul><li>Java</li><li>SpringBoot</li></ul> | - | <ul><li>Basic project skeleton</li></ul> |
 | ✅ | Unit Tests | <ul><li>JUnit</li></ul> | - | <ul><li>Basic endpoint tests</li></ul> |
 | ✅ | Relational DB | <ul><li>PostgreSQL</li></ul> | Language Content | <ul><li>Fetch a list of languages</li><li>Fetch their curriculum</li></ul> |
-| ✅ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | - | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
+| ✅ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | Frontend | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
+| 🏗️ | Containerization | <ul><li>Docker</li></ul> | - | <ul><li>Launch the web app in one command</li><li>Prepare for Kubernetes later</li></ul> |
 | 🏗️ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
 | ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
 | ⬜ | Authentication | <ul><li>Spring Authorization Server (OAuth2)</li></ul> | Authentication | <ul><li>Keep user's progress</li></ul> |
 | ⬜ | Events / Pub-Sub | <ul><li>Kafka</li></ul> | - | <ul><li>Calculate newly acquired experience points after lesson completion</li></ul> |
 | ⬜ | CI/CD | <ul><li>GitHub Actions</li></ul> | - | <ul><li>Run unit tests upon raising PRs</li></ul> |
-| ⬜ | Deployment + Cloud | <ul><li>Kubernetes</li><li>Docker</li><li>Azure (AKS)</li></ul> | - | <ul><li>Running end-to-end tests</li><li>Overseeing deployments</li></ul> |
+| ⬜ | Deployment + Cloud | <ul><li>Kubernetes</li><li>Azure (AKS)</li></ul> | - | <ul><li>Running end-to-end tests</li><li>Overseeing deployments</li></ul> |
 
 ## Nice-to-haves
 
