@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -11,11 +11,18 @@ import Sentences from '../components/Sentences';
 import './app.scss';
 
 function App() {
+  useEffect(() => {
+    // Clear languages cache on app startup
+    fetch('http://localhost:8082/languages/cache/clear', {
+      method: 'POST',
+    }).catch(err => console.error('Failed to clear cache:', err));
+  }, []);
+
   return (
     <Router>
       <div className="App">
-        <AppBar position="fixed" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-          <Toolbar sx={{ paddingLeft: 2, paddingRight: 2 }}>
+        <AppBar position="fixed" sx={{ backgroundColor: '#F6F0ED', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', zIndex: 1100 }}>
+          <Toolbar sx={{ paddingLeft: 2, paddingRight: 2, minHeight: '64px' }}>
             <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: '#4A5899' }} sx={{ fontWeight: 'bold' }}>
               LOQIO
             </Typography>

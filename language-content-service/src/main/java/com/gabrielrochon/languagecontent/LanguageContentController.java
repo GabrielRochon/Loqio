@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -65,10 +67,11 @@ public class LanguageContentController
 	public ResponseEntity<byte[]> getImage(HttpServletRequest request)
 	{
 		String requestURI = request.getRequestURI();
-		String imageName = requestURI.substring("/images/".length());
+		String encodedImageName = requestURI.substring("/images/".length());
 		try
 		{
-			System.out.println("Image request for: " + imageName);
+			String imageName = URLDecoder.decode(encodedImageName, StandardCharsets.UTF_8);
+			System.out.println("Image request for: " + imageName + " (decoded from: " + encodedImageName + ")");
 			byte[] imageBytes = azureBlobService.downloadBlob(imageName);
 			System.out.println("Serving image " + imageName + " with " + imageBytes.length + " bytes");
 			return ResponseEntity.ok()
@@ -76,7 +79,7 @@ public class LanguageContentController
 		}
 		catch (Exception e)
 		{
-			System.err.println("Error serving image " + imageName + ": " + e.getMessage());
+			System.err.println("Error serving image " + encodedImageName + ": " + e.getMessage());
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -86,6 +89,14 @@ public class LanguageContentController
 	public List<Language> getAllLanguages()
 	{
 		return languageService.getAllLanguages();
+	}
+
+	// Clear languages cache
+	@PostMapping("/languages/cache/clear")
+	public String clearLanguagesCache()
+	{
+		languageService.clearLanguagesCache();
+		return "Languages cache cleared";
 	}
 
 	@PostMapping("/languages")

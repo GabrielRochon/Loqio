@@ -29,12 +29,13 @@
 }
 
 .App-main {
-  padding-top: 80px; /* Space for header */
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .App-main.modules-page {

@@ -82,4 +82,13 @@ public class LanguageService
 	{
 		languageRepository.deleteById(id);
 	}
+
+	/**
+	 * Clears the languages cache.
+	 */
+	@CacheEvict(value = "languages", allEntries = true)
+	public void clearLanguagesCache()
+	{
+		// This method is used to clear the cache via the REST endpoint
+	}
 }
