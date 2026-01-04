@@ -49,10 +49,11 @@ Before running the microservices locally, ensure your current IP address is allo
 | ✅ | UI | <ul><li>React</li><li>Typescript</li><li>SCSS</li><li>Azure Blob Storage</li></ul> | Frontend | <ul><li>Navigate to a language course</li><li>Display the modules / sentences per module</li><li>Display background images</li></ul> |
 | ✅ | Containerization | <ul><li>Docker</li></ul> | - | <ul><li>Launch the web app in one command</li><li>Prepare for Kubernetes later</li></ul> |
 | ✅ | Caching | <ul><li>Redis</li></ul> | - | <ul><li>Reduce operation time to fetch the same language's curriculum many times</li></ul> |
-| ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
 | ⬜ | Authentication | <ul><li>Spring Authorization Server (OAuth2)</li></ul> | Authentication | <ul><li>Keep user's progress</li></ul> |
-| ⬜ | Authorization | <ul><li>Azure Entra Authentication</li></ul> | - | <ul><li>Remove the need to manually allow-list every IP that should have access to the PostgreSQL database</li></ul> |
+| ⬜ | Non-Relational DB | <ul><li>MongoDB</li></ul> | User Progress | <ul><li>Track the words learned</li><li>Track experience points of a user</li></ul> |
 | ⬜ | Events / Pub-Sub | <ul><li>Kafka</li></ul> | - | <ul><li>Calculate newly acquired experience points after lesson completion</li></ul> |
+| ⬜ | Telemetry | <ul><li>OpenTelemetry</li></ul> | Analytics | <ul><li>Emit lesson completion metrics</li></ul> |
+| ⬜ | Monitoring | <ul><li>Grafana</li><li>Prometheus</li></ul> | - | <ul><li>Consume metrics</li><li>Display them on graphs</li></ul> |
 | ⬜ | CI/CD | <ul><li>GitHub Actions</li></ul> | - | <ul><li>Run unit tests upon raising PRs</li></ul> |
 | ⬜ | Deployment + Cloud | <ul><li>Kubernetes</li><li>Azure (AKS)</li></ul> | - | <ul><li>Running end-to-end tests</li><li>Overseeing deployments</li></ul> |
 
@@ -61,7 +62,6 @@ Before running the microservices locally, ensure your current IP address is allo
 |   | Category | Technology Used | Microservice Requiring Creation | Feature |
 | - | -------- | --------------- | ------------------------------- | ------- |
 | ⬜ | Rest API Documentation | <ul><li>Swagger</li></ul> | - | <ul><li>Document all microservices' API endpoints</li></ul>
-| ⬜ | Telemetry | <ul><li>OpenTelemetry</li></ul> | Analytics | <ul><li>Emit lesson completion metrics</li></ul> |
-| ⬜ | Monitoring | <ul><li>Grafana</li><li>Prometheus</li></ul> | - | <ul><li>Consume metrics</li><li>Display them on graphs</li></ul> |
 | ⬜ | Code Quality | <ul><li>SonarQube</li></ul> | - | <ul><li>Highlight possible code bugs</li><li>Highlight quality improvements upon running Merge Validation pipeline when raising PR</li></ul>
 | ⬜ | AI Integration | <ul><li>Claude</li></ul> | - | <ul><li>Add an AI assistant to ask questions during the lesson</li></ul>
+| ⬜ | Authorization | <ul><li>Azure Entra Authentication</li></ul> | - | <ul><li>Remove the need to manually allow-list every IP that should have access to the PostgreSQL database</li></ul> |
