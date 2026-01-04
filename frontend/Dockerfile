@@ -22,6 +22,11 @@ RUN npm run build
 # ================================
 FROM nginx:alpine
 
+# Copy custom nginx configuration that enables SPA routing
+# SPA routing: Single Page Application routing handled by client-side JavaScript
+# Fixes 404 errors on page reload by serving index.html for client-side routes
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy built app to nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
